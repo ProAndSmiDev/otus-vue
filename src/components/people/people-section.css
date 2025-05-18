@@ -1,0 +1,35 @@
+.people-section {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    row-gap: 24px;
+}
+
+.people-section .people-section__title {
+    font-size: 48px;
+    line-height: 58px;
+    color: rgb(100,50,25);
+    font-weight: 700;
+}
+
+.people-section .people-section__btn {
+    order: 1;
+    background-color: rgb(100,50,25);
+    padding: 10px 20px 12px;
+    color: white;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 500;
+    border-radius: 5px;
+    min-width: 240px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.people-section .people-section__btn--active,
+.people-section .people-section__btn:hover {
+    background-color: rgb(150,75,40);
+}
+
+.people-section__btn:hover {
+    background-color: rgb(100,50,25);
+}
