@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import PeopleSection from "./components/people/PeopleSection.vue";
+import Home from "./pages/home.vue";
 </script>
 
 <template>
   <div class="app">
-    <PeopleSection />
+    <Home class="app__home" />
   </div>
 </template>
 
@@ -20,5 +20,11 @@ button {
   background-color: transparent;
   border: unset;
   cursor: pointer;
+}
+
+img {
+  width: auto;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
