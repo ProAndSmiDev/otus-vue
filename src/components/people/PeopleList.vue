@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 
 interface Props {
-  people: People[]
+  people: IPeople[]
 }
 
 defineProps<Props>()
@@ -53,4 +53,4 @@ function openInfo(id: number) {
   </ul>
 </template>
 
-<style scoped src="./people-list.css"></style>
+<style scoped src="./styles/people-list.css"></style>

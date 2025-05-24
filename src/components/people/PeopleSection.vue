@@ -4,7 +4,7 @@ import { ref } from "vue";
 import {Status} from "../../types/enums/Status";
 import {Gender} from "../../types/enums/Gender";
 
-const people: Array<People> = [
+const people: IPeople[] = [
   {
     id: 1,
     name: 'Alice',
@@ -63,4 +63,4 @@ const openedPeople = ref<boolean>(false);
   </section>
 </template>
 
-<style scoped src="./people-section.css"></style>
+<style scoped src="./styles/people-section.css"></style>
