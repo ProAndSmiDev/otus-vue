@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import PeopleSection from "../components/people/PeopleSection.vue";
 import ProductsSection from "../components/products/ProductsSection.vue";
 </script>

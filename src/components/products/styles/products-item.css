@@ -1,5 +1,9 @@
 .products-item {
     display: flex;
+}
+
+.products-item .products-item__wrapper {
+    display: flex;
     flex-direction: column;
     background-color: rgb(255,248,220);
     padding: 24px 16px;
