@@ -1,34 +1,25 @@
 <script setup lang="ts">
 import ProductsItem from "./ProductsItem.vue";
-import {ref, onMounted, computed} from "vue";
-import axios from "axios";
+import {ref, computed} from "vue";
 import {Field, Form} from "vee-validate";
+import {IProductsItem} from "../../types/Products";
 
-const isLoading = ref<boolean>(true)
-const products = ref<IProductsItem[]>([])
+const props = defineProps<{
+  products: IProductsItem[]
+  isLoading: boolean
+}>()
 
 const searchInput = ref<string>('');
 const searchQuery = ref<string>('');
 
-onMounted(async () => {
-  try {
-    const response = await axios.get("https://fakestoreapi.com/products");
-    products.value = response.data;
-  } catch(error) {
-    console.error("Ошибка при загрузке продуктов:", error);
-  } finally {
-    isLoading.value = false;
-  }
-})
-
 const filteredProducts = computed(() => {
   const query = searchQuery.value.trim().toLowerCase();
 
-  if (!query) return products.value;
+  if (!query) return props.products;
 
   const numberQuery = parseFloat(query);
 
-  return products.value.filter((product: IProductsItem) => {
+  return props.products.filter((product: IProductsItem) => {
     const nameMatch = product.title.toLowerCase().includes(query);
     const priceMatch = !isNaN(numberQuery) && product.price === numberQuery;
 
