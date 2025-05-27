@@ -1,0 +1,19 @@
+.header-menu {
+    justify-content: center;
+    column-gap: 20px;
+}
+
+.header-menu .header-menu__link {
+    color: rgb(255,255,255);
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 24px;
+    line-height: 29px;
+    transition: color 0.3s ease-in-out;
+}
+
+.header-menu .header-menu__link:hover,
+.header-menu .header-menu__link--active {
+    color: rgb(185, 120, 93);
+}

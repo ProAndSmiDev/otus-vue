@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import Home from "./pages/home.vue";
+import {RouterView} from "vue-router";
+import HeaderBar from "./components/header/HeaderBar.vue";
 </script>
 
 <template>
   <div class="app">
-    <Home class="app__home" />
+    <HeaderBar class="app__header" />
+    <RouterView />
   </div>
 </template>
 
@@ -26,5 +28,22 @@ img {
   width: auto;
   height: 100%;
   object-fit: cover;
+}
+
+ul, ol {
+  list-style: none;
+  display: flex;
+}
+</style>
+
+<style scoped>
+.app {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+}
+
+.app .app__header {
+  width: 100%;
 }
 </style>

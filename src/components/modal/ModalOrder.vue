@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import {ref} from 'vue'
 import {Field, Form, ErrorMessage, useForm, defineRule} from "vee-validate";
-import rules from "../../composables/rules";
+import {useValidation} from "../../composables/useValidation";
 import axios from "axios";
 
 const props = defineProps<{
   product: IProductsItem
 }>()
+
+const rules = useValidation()
 
 Object.entries(rules).forEach(([name, validator]) => {
   defineRule(name, validator)
@@ -85,7 +87,8 @@ async function sendForm(values: FormOrderValues | any) {
     window.location.href = '/'
   }, 15000)
 }
-function closeModal() {
+function closeModal(e: Event) {
+  e.preventDefault()
   resetForm()
   isSentForm.value = false
   emits('close-modal')

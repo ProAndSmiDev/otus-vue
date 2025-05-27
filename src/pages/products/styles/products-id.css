@@ -1,0 +1,10 @@
+.products-id {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.products-id .products-id__full {
+    width: 100%;
+    max-width: 1820px;
+}
