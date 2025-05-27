@@ -1,14 +1,27 @@
 <script setup lang="ts">
 import {IProductsItem} from "../../types/Products";
 import getSalePrice from "../../utils/getSalePrice";
+import { ref } from "vue"
 
-defineProps<{
+const props = defineProps<{
   product: IProductsItem
+  counter?: number
+  isCart?: boolean
 }>()
+
+const count = ref<number>(props.counter)
+
+function removeCounter() {
+  if (count.value === 0) return
+  count.value -= 1
+}
+function addCounter() {
+  count.value += 1
+}
 </script>
 
 <template>
-  <section class="products-full">
+  <section v-if="product" class="products-full">
     <img :src="product.image" :alt="product.title" class="products-full__img">
 
     <div class="products-full__info">
@@ -39,7 +52,12 @@ defineProps<{
         <del class="products-full__price--normal">{{ product.price }}$</del>
         <b class="products-full__price--sale">{{ getSalePrice(product.price, 25) }}$</b>
       </p>
-      <button class="products-full__add" type="button">Добавить в корзину</button>
+      <button v-if="!isCart" class="products-full__add" type="button">Добавить в корзину</button>
+      <div v-else class="products-full__counter">
+        <button @click="removeCounter" class="products-full__counter-remove">-</button>
+        <p class="products-full__counter-value">{{ count }}</p>
+        <button @click="addCounter" class="products-full__counter-add">+</button>
+      </div>
     </div>
   </section>
 </template>

@@ -66,6 +66,8 @@
     display: flex;
     justify-content: flex-end;
     flex-direction: column;
+    width: 100%;
+    max-width: 120px;
 }
 
 .products-full .products-full__rating {
@@ -86,4 +88,27 @@
 
 .products-full .products-full__add:hover {
     background-color: rgb(150,75,40);
+}
+
+.products-full .products-full__counter {
+    margin-top: auto;
+    margin-left: auto;
+    color: rgb(100,50,25);
+    font-weight: 700;
+    display: flex;
+    column-gap: 8px;
+    flex-shrink: 0;
+}
+
+.products-full .products-full__counter-value {
+    background-color: #fdfdfd;
+    text-align: center;
+    padding: 8px;
+    border-radius: 8px;
+    width: 60px;
+}
+
+.products-full .products-full__counter-remove,
+.products-full .products-full__counter-add {
+    font-size: 20px;
 }
