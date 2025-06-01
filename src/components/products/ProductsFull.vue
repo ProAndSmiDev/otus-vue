@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import {IProductsItem} from "../../types/Products";
+import {IProducts} from "../../types/Products";
 import getSalePrice from "../../utils/getSalePrice";
 import { ref } from "vue"
 
 const props = defineProps<{
-  product: IProductsItem
-  counter?: number
+  product: IProducts
   isCart?: boolean
 }>()
 
-const count = ref<number>(props.counter)
+const count = ref<number>(props.product.quantity);
 
 function removeCounter() {
   if (count.value === 0) return
@@ -21,27 +20,27 @@ function addCounter() {
 </script>
 
 <template>
-  <section v-if="product" class="products-full">
-    <img :src="product.image" :alt="product.title" class="products-full__img">
+  <section class="products-full">
+    <img :src="product.item?.image" :alt="product.item?.title" class="products-full__img">
 
     <div class="products-full__info">
       <header class="products-full__header">
         <h1 class="products-full__title">
-          {{ product.title }}
+          {{ product.item?.title }}
         </h1>
       </header>
 
       <p class="products-full__description">
-        {{ product.description }}
+        {{ product.item?.description }}
       </p>
 
       <footer class="products-full__footer">
         <ul class="products-full__rating">
           <li class="products-full__rating-item">
-            <strong>Кол-во оценок:</strong> {{ product.rating.count }}
+            <strong>Кол-во оценок:</strong> {{ product.item?.rating.count }}
           </li>
           <li class="products-full__rating-item">
-            <b>Рейтинг продукта:</b> {{ product.rating.rate }}
+            <b>Рейтинг продукта:</b> {{ product.item?.rating.rate }}
           </li>
         </ul>
       </footer>
@@ -49,8 +48,8 @@ function addCounter() {
 
     <div class="products-full__wrapper">
       <p class="products-full__price">
-        <del class="products-full__price--normal">{{ product.price }}$</del>
-        <b class="products-full__price--sale">{{ getSalePrice(product.price, 25) }}$</b>
+        <del class="products-full__price--normal">{{ product.item?.price }}$</del>
+        <b class="products-full__price--sale">{{ getSalePrice(product.item?.price, 25) }}$</b>
       </p>
       <button v-if="!isCart" class="products-full__add" type="button">Добавить в корзину</button>
       <div v-else class="products-full__counter">

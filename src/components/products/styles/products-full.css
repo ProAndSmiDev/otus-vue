@@ -67,7 +67,7 @@
     justify-content: flex-end;
     flex-direction: column;
     width: 100%;
-    max-width: 120px;
+    max-width: 240px;
 }
 
 .products-full .products-full__rating {
@@ -75,6 +75,7 @@
 }
 
 .products-full .products-full__add {
+    min-width: 240px;
     margin-top: auto;
     background-color: rgb(100,50,25);
     color: #fff;

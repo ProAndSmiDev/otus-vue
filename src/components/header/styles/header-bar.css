@@ -11,6 +11,7 @@
 }
 
 .header-bar .header-bar__cart {
+    position: relative;
     margin-left: auto;
     color: rgb(255,255,255);
     text-decoration: none;
@@ -21,4 +22,19 @@
 .header-bar .header-bar__cart:hover,
 .header-bar .header-bar__cart--active {
     color: rgb(185, 120, 93);
+}
+
+.header-bar .header-bar__cart-counter {
+    position: absolute;
+    top: 0;
+    right: -10px;
+    background-color: rgb(255, 0, 0);
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
 }

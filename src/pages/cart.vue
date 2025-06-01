@@ -1,32 +1,41 @@
 <script setup lang="ts">
 import ProductsFull from "../components/products/ProductsFull.vue";
 import {useProductById} from "../composables/useProductById";
-import {IProductsItem} from "../types/Products";
 import {ref, watch} from "vue";
+import ModalOrder from "../components/modal/ModalOrder.vue";
+import {useProducts} from "../composables/useProducts";
+import {IProducts} from "../types/Products";
 
-const productsInCartIds = ref<number[]>([1, 1, 4, 7])
+const productsInCartIds = ref<number[]>([1, 1, 4, 7, 2, 4])
+const isSendFormModalOpen = ref<boolean>(false);
 
-const cartItems = ref<{product: IProductsItem, quantity: number}[]>([])
+const cartItems = ref<IProducts[]>([])
+const {isLoading} = useProducts()
 
 watch(productsInCartIds, () => {
-  // Временный объект для сгруппированных товаров
-  const grouped: Record<number, { product: IProductsItem; quantity: number }> = {};
+  try {
+    const grouped: IProducts = {};
 
-  productsInCartIds.value.forEach(id => {
-    // Получаем товар
-    const { product } = useProductById(id);
+    productsInCartIds.value.forEach(id => {
+      const { product } = useProductById(id);
 
-    // Проверка, есть ли уже такой товар в сгруппированном объекте
-    if (grouped[id]) {
-      grouped[id].quantity += 1;
-    } else {
-      grouped[id] = { product, quantity: 1 };
-    }
-  });
+      if (grouped[id]) {
+        grouped[id].quantity += 1;
+      } else {
+        grouped[id] = { item: product, quantity: 1 };
+      }
+    });
 
-  // Обновляем массив
-  cartItems.value = Object.values(grouped);
+    cartItems.value = Object.values(grouped);
+  } catch (error) {
+    console.error("Error grouping products in cart:", error);
+  }
+
 }, { immediate: true })
+
+function clearCart() {
+  cartItems.value.length = 0
+}
 </script>
 
 <template>
@@ -36,11 +45,36 @@ watch(productsInCartIds, () => {
         Корзина
       </h1>
 
-      <ul class="cart__list">
-        <li v-for="(item, idx) in cartItems" :key="idx">
-          <ProductsFull :product="item.product" class="cart__product" :counter="item.quantity" is-cart />
-        </li>
-      </ul>
+      <span v-if="isLoading" class="cart__loader">
+        Загрузка, подождите...
+      </span>
+
+      <template v-else>
+        <ul class="cart__list">
+          <li v-for="(product, idx) in cartItems" :key="idx">
+            <ProductsFull :product class="cart__product" is-cart />
+          </li>
+        </ul>
+
+        <ul class="cart__actions">
+          <li class="cart__actions-item">
+            <button @click="clearCart" type="button" class="cart__action">
+              Очистить
+            </button>
+          </li>
+          <li class="cart__actions-item">
+            <button @click="isSendFormModalOpen = true" type="button" class="cart__action">
+              Оформить заказ
+            </button>
+          </li>
+        </ul>
+      </template>
+
+      <ModalOrder
+          v-if="isSendFormModalOpen"
+          :products="cartItems"
+          @close-modal="() => isSendFormModalOpen = false"
+      />
     </div>
   </main>
 </template>

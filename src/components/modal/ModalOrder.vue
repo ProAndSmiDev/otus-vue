@@ -3,9 +3,10 @@ import {ref} from 'vue'
 import {Field, Form, ErrorMessage, useForm, defineRule} from "vee-validate";
 import {useValidation} from "../../composables/useValidation";
 import axios from "axios";
+import {IProducts} from "../../types/Products";
 
 const props = defineProps<{
-  product: IProductsItem
+  products: IProducts[]
 }>()
 
 const rules = useValidation()
@@ -62,17 +63,22 @@ const formFields = [
 ]
 
 async function sendForm(values: FormOrderValues | any) {
-  const data = {
-    name: values.userName,
-    email: values.userEmail,
-    phone: values.userPhone,
-    address: values.userAddress,
-    agreement: values.userAgreement,
-    productName: props.product.title,
-    productPrice: props.product.price,
-  }
-
   try {
+    const data = ref<Object>([])
+
+    props.products.forEach((item) => {
+      data.value.push({
+        name: values.userName,
+        email: values.userEmail,
+        phone: values.userPhone,
+        address: values.userAddress,
+        agreement: values.userAgreement,
+        productName: item.product.title,
+        productPrice: item.product.price,
+        quantity: item.quantity || 1,
+      })
+    })
+
     const response = await axios.post('https://httpbin.org/post', data)
     console.log('Ответ сервера', response.data)
   } catch (error) {
@@ -155,7 +161,6 @@ function closeModal(e: Event) {
           Через 15 секунд Вы будете перенаправлены на главную страницу.
         </p>
       </template>
-
     </div>
   </section>
 </template>

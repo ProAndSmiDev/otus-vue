@@ -1,13 +1,18 @@
-interface ProductRate {
+interface IProductsRate {
     rate: number
     count: number
 }
 
-export interface IProductsItem {
+interface IProductsItem {
     id: number
     title: string
     price: number
     description: string
     image: string
-    rating: ProductRate
+    rating: IProductsRate
+}
+
+export interface IProducts {
+    item?: IProductsItem
+    quantity?: number
 }
