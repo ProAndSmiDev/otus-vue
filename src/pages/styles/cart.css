@@ -22,12 +22,23 @@
     row-gap: 20px;
 }
 
+.cart .cart__lower {
+    display: flex;
+    align-items: center;
+}
+
+.cart .cart__price {
+    flex-direction: column;
+}
+
 .cart__actions {
+    margin-left: auto;
+    column-gap: 20px;
     justify-content: space-between;
 }
 
 .cart__actions-item {
-    min-width: 180px;
+    min-width: 120px;
 }
 
 .cart .cart__action {

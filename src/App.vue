@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import {RouterView} from "vue-router";
 import HeaderBar from "./components/header/HeaderBar.vue";
-import {ref, watch} from "vue";
-
-const productsInCartIds = ref<number[]>([1, 1, 4, 7, 2])
 </script>
 
 <template>
   <div class="app">
-    <HeaderBar :countItems="productsInCartIds.length" class="app__header" />
+    <HeaderBar class="app__header" />
     <RouterView />
   </div>
 </template>

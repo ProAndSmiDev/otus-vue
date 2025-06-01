@@ -52,7 +52,7 @@ function handleSearch() {
 
     <ul v-else class="products-section__list">
       <li v-for="product in filteredProducts" :key="product.id" class="products-section__item">
-        <ProductsItem :product="{item: product, quantity: 1}" class="products-section__product" />
+        <ProductsItem :product="{item: product, qty: 1}" class="products-section__product" />
       </li>
     </ul>
   </section>

@@ -75,7 +75,7 @@ async function sendForm(values: FormOrderValues | any) {
         agreement: values.userAgreement,
         productName: item.product.title,
         productPrice: item.product.price,
-        quantity: item.quantity || 1,
+        qty: item.qty || 1,
       })
     })
 
@@ -129,9 +129,9 @@ function closeModal(e: Event) {
             }"
         >
           <template v-if="field.type !== 'checkbox'">
-            <p class="modal-order__label-caption">
+            <span class="modal-order__label-caption">
               {{ field.label }}
-            </p>
+            </span>
           </template>
 
           <Field

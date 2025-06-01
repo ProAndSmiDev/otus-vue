@@ -14,7 +14,7 @@ const props = defineProps<Props>()
 const isSendFormModalOpen = ref<boolean>(false)
 const product = {
   item: props.product.item,
-  quantity: 1,
+  qty: 1,
 }
 
 function openSendFormModal(e: Event) {

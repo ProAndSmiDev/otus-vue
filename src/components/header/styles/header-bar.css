@@ -1,6 +1,5 @@
 .header-bar {
     display: flex;
-    justify-content: center;
     align-items: center;
     padding: 20px 40px;
     background-color: rgb(100,50,25);
@@ -10,18 +9,33 @@
     margin-left: auto;
 }
 
-.header-bar .header-bar__cart {
-    position: relative;
+.header-bar .header-bar__actions {
     margin-left: auto;
+    display: flex;
+    column-gap: 20px;
+}
+
+.header-bar .header-bar__login,
+.header-bar .header-bar__cart {
     color: rgb(255,255,255);
-    text-decoration: none;
-    width: 36px;
     transition: color 0.3s ease-in-out;
 }
 
+.header-bar .header-bar__login:hover,
 .header-bar .header-bar__cart:hover,
 .header-bar .header-bar__cart--active {
     color: rgb(185, 120, 93);
+}
+
+.header-bar .header-bar__login {
+    width: 36px;
+    height: 36px;
+}
+
+.header-bar .header-bar__cart {
+    position: relative;
+    text-decoration: none;
+    width: 36px;
 }
 
 .header-bar .header-bar__cart-counter {

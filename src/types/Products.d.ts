@@ -14,5 +14,5 @@ interface IProductsItem {
 
 export interface IProducts {
     item?: IProductsItem
-    quantity?: number
+    qty?: number
 }

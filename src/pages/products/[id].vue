@@ -9,7 +9,7 @@ const {product} = useProductById(Number(route.params.productId))
 
 <template>
   <main class="products-id">
-    <ProductsFull v-if="product" :product="{item: product, quantity: 1}" class="products-id__full" />
+    <ProductsFull v-if="product" :product="{item: product, qty: 1}" class="products-id__full" />
   </main>
 </template>
 

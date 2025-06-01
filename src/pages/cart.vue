@@ -1,41 +1,17 @@
 <script setup lang="ts">
 import ProductsFull from "../components/products/ProductsFull.vue";
-import {useProductById} from "../composables/useProductById";
-import {ref, watch} from "vue";
+import {ref} from "vue";
 import ModalOrder from "../components/modal/ModalOrder.vue";
-import {useProducts} from "../composables/useProducts";
 import {IProducts} from "../types/Products";
+import {useCartStore} from "../store/cart";
+import getSalePrice from "../utils/getSalePrice";
 
-const productsInCartIds = ref<number[]>([1, 1, 4, 7, 2, 4])
 const isSendFormModalOpen = ref<boolean>(false);
 
-const cartItems = ref<IProducts[]>([])
-const {isLoading} = useProducts()
-
-watch(productsInCartIds, () => {
-  try {
-    const grouped: IProducts = {};
-
-    productsInCartIds.value.forEach(id => {
-      const { product } = useProductById(id);
-
-      if (grouped[id]) {
-        grouped[id].quantity += 1;
-      } else {
-        grouped[id] = { item: product, quantity: 1 };
-      }
-    });
-
-    cartItems.value = Object.values(grouped);
-  } catch (error) {
-    console.error("Error grouping products in cart:", error);
-  }
-
-}, { immediate: true })
-
-function clearCart() {
-  cartItems.value.length = 0
-}
+const {cartProducts, clearCart, getCounterByCartItems, getTotalPriceByCartItems} = useCartStore()
+const counterProducts = getCounterByCartItems()
+const products = ref<IProducts[]>(cartProducts)
+const totalPrice = getTotalPriceByCartItems
 </script>
 
 <template>
@@ -45,20 +21,29 @@ function clearCart() {
         Корзина
       </h1>
 
-      <span v-if="isLoading" class="cart__loader">
-        Загрузка, подождите...
-      </span>
+      <p class="cart__subtitle">
+        В корзине {{ counterProducts }} {{ counterProducts === 1 ? 'товар' : (counterProducts > 1 && counterProducts < 5 ? 'товара' : 'товаров') }}
+      </p>
 
-      <template v-else>
-        <ul class="cart__list">
-          <li v-for="(product, idx) in cartItems" :key="idx">
-            <ProductsFull :product class="cart__product" is-cart />
+      <ul class="cart__list">
+        <li v-for="(product, idx) in products" :key="idx">
+          <ProductsFull :product class="cart__product" is-cart />
+        </li>
+      </ul>
+
+      <div v-if="products.length" class="cart__lower">
+        <ul class="cart__price">
+          <li class="cart__price-item">
+            <b>Итого:</b> {{ totalPrice }}$
+          </li>
+          <li class="cart__price-item">
+            <b>Скидка 25%:</b> {{ getSalePrice(totalPrice, 25) }}$
           </li>
         </ul>
 
         <ul class="cart__actions">
           <li class="cart__actions-item">
-            <button @click="clearCart" type="button" class="cart__action">
+            <button @click="clearCart()" type="button" class="cart__action">
               Очистить
             </button>
           </li>
@@ -68,11 +53,11 @@ function clearCart() {
             </button>
           </li>
         </ul>
-      </template>
+      </div>
 
       <ModalOrder
           v-if="isSendFormModalOpen"
-          :products="cartItems"
+          :products
           @close-modal="() => isSendFormModalOpen = false"
       />
     </div>

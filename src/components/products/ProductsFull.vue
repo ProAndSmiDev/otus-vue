@@ -1,22 +1,14 @@
 <script setup lang="ts">
-import {IProducts} from "../../types/Products";
-import getSalePrice from "../../utils/getSalePrice";
-import { ref } from "vue"
+import {IProducts} from "../../types/Products"
+import getSalePrice from "../../utils/getSalePrice"
+import { useCartStore } from "../../store/cart"
 
-const props = defineProps<{
+defineProps<{
   product: IProducts
   isCart?: boolean
 }>()
 
-const count = ref<number>(props.product.quantity);
-
-function removeCounter() {
-  if (count.value === 0) return
-  count.value -= 1
-}
-function addCounter() {
-  count.value += 1
-}
+const { addToCart, removeFromCart, addToCartById } = useCartStore()
 </script>
 
 <template>
@@ -31,16 +23,16 @@ function addCounter() {
       </header>
 
       <p class="products-full__description">
-        {{ product.item?.description }}
+        {{ product.item.description }}
       </p>
 
       <footer class="products-full__footer">
         <ul class="products-full__rating">
           <li class="products-full__rating-item">
-            <strong>Кол-во оценок:</strong> {{ product.item?.rating.count }}
+            <strong>Кол-во оценок:</strong> {{ product.item.rating.count }}
           </li>
           <li class="products-full__rating-item">
-            <b>Рейтинг продукта:</b> {{ product.item?.rating.rate }}
+            <b>Рейтинг продукта:</b> {{ product.item.rating.rate }}
           </li>
         </ul>
       </footer>
@@ -48,14 +40,14 @@ function addCounter() {
 
     <div class="products-full__wrapper">
       <p class="products-full__price">
-        <del class="products-full__price--normal">{{ product.item?.price }}$</del>
-        <b class="products-full__price--sale">{{ getSalePrice(product.item?.price, 25) }}$</b>
+        <del class="products-full__price--normal">{{ product.item.price }}$</del>
+        <b class="products-full__price--sale">{{ getSalePrice(product.item.price, 25) }}$</b>
       </p>
-      <button v-if="!isCart" class="products-full__add" type="button">Добавить в корзину</button>
+      <button @click="addToCart(product)" v-if="!isCart" class="products-full__add" type="button">Добавить в корзину</button>
       <div v-else class="products-full__counter">
-        <button @click="removeCounter" class="products-full__counter-remove">-</button>
-        <p class="products-full__counter-value">{{ count }}</p>
-        <button @click="addCounter" class="products-full__counter-add">+</button>
+        <button @click="removeFromCart(product.item.id)" class="products-full__counter-remove">-</button>
+        <p class="products-full__counter-value">{{ product.qty }}</p>
+        <button @click="addToCartById(product.item.id)" class="products-full__counter-add">+</button>
       </div>
     </div>
   </section>
