@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import {ref} from 'vue'
-import {Field, Form, ErrorMessage, useForm, defineRule} from "vee-validate";
+import {useForm} from "vee-validate";
+import {Field, Form, ErrorMessage, defineRule} from "vee-validate";
 import {useValidation} from "../../composables/useValidation";
 import axios from "axios";
 import {IProducts} from "../../types/Products";
+import UiModal from "../ui/modal/UiModal.vue";
 
 const props = defineProps<{
   products: IProducts[]
@@ -16,8 +18,7 @@ Object.entries(rules).forEach(([name, validator]) => {
 })
 
 const isSentForm = ref(false)
-const {resetForm, handleSubmit} = useForm()
-const emits = defineEmits(['close-modal'])
+const {resetForm} = useForm()
 
 const formFields = [
   {
@@ -62,6 +63,8 @@ const formFields = [
   }
 ]
 
+const modalTitle = ref<string>(isSentForm ? 'Вы успешно оформили заказ!' : 'Оформить заказ')
+
 async function sendForm(values: FormOrderValues | any) {
   try {
     const data = ref<Object>([])
@@ -93,76 +96,66 @@ async function sendForm(values: FormOrderValues | any) {
     window.location.href = '/'
   }, 15000)
 }
-function closeModal(e: Event) {
-  e.preventDefault()
-  resetForm()
+
+function handleCloseModal() {
   isSentForm.value = false
-  emits('close-modal')
+  resetForm()
 }
 </script>
 
 <template>
-  <section class="modal-order">
-    <div class="modal-order__wrapper">
-      <button
-          @click="closeModal"
-          class="modal-order__close-modal"
+  <UiModal
+      :title="modalTitle"
+      class="modal-order"
+      @close-modal="handleCloseModal"
+  >
+    <Form
+        v-if="!isSentForm"
+        class="modal-order__form"
+        @submit="sendForm"
+    >
+      <label
+          v-for="field in formFields"
+          :key="field.id"
+          class="modal-order__label"
+          :class="{
+            'modal-order__label--user-agreement': field.name === 'userAgreement'
+          }"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21"><path fill="currentColor" d="M12.02 10 21 18.55 19.48 20l-8.98-8.55L1.52 20 0 18.55 8.98 10 0 1.45 1.52 0l8.98 8.55L19.48 0 21 1.45z"/></svg>
-      </button>
-
-      <h3 class="modal-order__title">
-        {{ isSentForm ? 'Вы успешно оформили заказ!' : 'Оформить заказ' }}
-      </h3>
-
-      <Form
-          v-if="!isSentForm"
-          class="modal-order__form"
-          @submit="sendForm"
-      >
-        <label
-            v-for="field in formFields"
-            :key="field.id"
-            class="modal-order__label"
-            :class="{
-              'modal-order__label--user-agreement': field.name === 'userAgreement'
-            }"
-        >
-          <template v-if="field.type !== 'checkbox'">
-            <span class="modal-order__label-caption">
-              {{ field.label }}
-            </span>
-          </template>
-
-          <Field
-              :name="field.name"
-              :type="field.type"
-              class="modal-order__field"
-              :placeholder="field?.placeholder"
-              :rules="field.rules"
-              :value="field.value"
-          />
-
-          <template v-if="field.type === 'checkbox'">
+        <template v-if="field.type !== 'checkbox'">
+          <span class="modal-order__label-caption">
             {{ field.label }}
-          </template>
+          </span>
+        </template>
 
-          <ErrorMessage :name="field.name" class="modal-order__error" as="p" />
-        </label>
+        <Field
+            :name="field.name"
+            :type="field.type"
+            class="modal-order__field"
+            :placeholder="field?.placeholder"
+            :rules="field.rules"
+            :value="field.value"
+        />
 
-        <button type="submit" class="modal-order__submit">Отправить</button>
-      </Form>
+        <template v-if="field.type === 'checkbox'">
+          {{ field.label }}
+        </template>
 
-      <template v-else>
-        <p class="modal-order__notice">
-          В ближайшее время с Вами свяжется наш менеджер для уточнения деталей.
-        </p>
-        <p class="modal-order__notice">
-          Через 15 секунд Вы будете перенаправлены на главную страницу.
-        </p>
-      </template>
-    </div>
-  </section>
+        <ErrorMessage :name="field.name" class="modal-order__error" as="span" />
+      </label>
+
+      <button type="submit" class="modal-order__submit">Отправить</button>
+    </Form>
+
+    <template v-else>
+      <p class="modal-order__notice">
+        В ближайшее время с Вами свяжется наш менеджер для уточнения деталей.
+      </p>
+      <p class="modal-order__notice">
+        Через 15 секунд Вы будете перенаправлены на главную страницу.
+      </p>
+    </template>
+  </UiModal>
 </template>
 
 <style scoped src="./styles/modal-order.css"></style>

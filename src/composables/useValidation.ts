@@ -1,4 +1,14 @@
 export function useValidation() {
+    const validateLogin = (value: string) => {
+        if (!value) return 'Поле "*Логин" обязательно';
+        const regex = /^[a-zA-Z0-9_-]{3,16}$/;
+        return regex.test(value) ? true : 'Введено некорректное значение поля "Логин"';
+    }
+    const validatePassword = (value: string) => {
+        if (!value) return 'Поле "*Пароль" обязательно';
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        return regex.test(value) ? true : 'Введено некорректное значение поля "Пароль"';
+    }
     const validateName = (value: string) => value ? true : 'Введите свое имя!';
 
     const validateEmail = (value: string) => {
@@ -18,6 +28,8 @@ export function useValidation() {
     const validateAgreement = (value: string) => value ? true : 'Необходимо согласиться с обработкой персональных данных!';
 
     return {
+        validateLogin,
+        validatePassword,
         validateName,
         validateEmail,
         validatePhone,

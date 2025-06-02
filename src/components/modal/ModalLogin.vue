@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import {Form, Field} from "vee-validate"
+import {ref} from 'vue'
+import {useValidation} from "../../composables/useValidation";
+import {Form, Field, ErrorMessage, defineRule} from "vee-validate"
+import UiModal from "../ui/modal/UiModal.vue";
+
+const rules = useValidation()
+
+Object.entries(rules).forEach(([name, validator]) => {
+  defineRule(name, validator)
+})
 
 const formFields = [
   {
@@ -7,7 +16,7 @@ const formFields = [
     label: 'Логин:',
     name: 'userLogin',
     type: 'text',
-    rules: 'required',
+    rules: 'validateLogin',
     placeholder: 'Введите ваш логин',
   },
   {
@@ -15,50 +24,44 @@ const formFields = [
     label: 'Пароль:',
     name: 'userPassword',
     type: 'password',
-    rules: 'required',
+    rules: 'validatePassword',
     placeholder: 'Введите ваш пароль',
   },
 ]
+const modalTitle = ref<string>('Вход в систему')
 </script>
 
 <template>
-  <section class="modal-login">
-    <div class="modal-login__wrapper">
-      <button
-          @click="closeModal"
-          class="modal-login__close-modal"
+  <UiModal
+      :title="modalTitle"
+      class="modal-login"
+      narrow
+  >
+    <Form class="modal-login__form">
+      <label
+          v-for="field in formFields"
+          :key="field.id"
+          class="modal-login__label"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21"><path fill="currentColor" d="M12.02 10 21 18.55 19.48 20l-8.98-8.55L1.52 20 0 18.55 8.98 10 0 1.45 1.52 0l8.98 8.55L19.48 0 21 1.45z"/></svg>
+        <span class="modal-login__label-caption">
+          {{ field.label }}
+        </span>
+
+        <Field
+            :name="field.name"
+            :type="field.type"
+            :placeholder="field.placeholder"
+            :rules="field.rules"
+            class="modal-login__label-input" />
+
+        <ErrorMessage :name="field.name" class="modal-login__error" as="span" />
+      </label>
+
+      <button class="modal-login__submit">
+        Войти
       </button>
-
-      <h3 class="modal-login__title">
-        Вход в систему
-      </h3>
-
-      <Form class="modal-login__form">
-        <label
-            v-for="field in formFields"
-            :key="field.id"
-            class="modal-login__label"
-        >
-          <span class="modal-login__label-caption">
-            {{ field.label }}
-          </span>
-
-          <Field
-              :name="field.name"
-              :type="field.type"
-              :placeholder="field.placeholder"
-              :rules="field.rules"
-              class="modal-login__label-input" />
-        </label>
-
-        <button class="modal-login__submit">
-          Войти
-        </button>
-      </Form>
-    </div>
-  </section>
+    </Form>
+  </UiModal>
 </template>
 
 <style scoped src="./styles/modal-login.css"></style>
