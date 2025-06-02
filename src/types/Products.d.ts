@@ -3,16 +3,12 @@ interface IProductsRate {
     count: number
 }
 
-interface IProductsItem {
+export interface IProducts {
     id: number
     title: string
     price: number
     description: string
     image: string
     rating: IProductsRate
-}
-
-export interface IProducts {
-    item?: IProductsItem
-    qty?: number
+    qty: number
 }

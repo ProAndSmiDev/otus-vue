@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ProductsFull from "../components/products/ProductsFull.vue";
-import {ref} from "vue";
+import {ref, computed} from "vue";
 import ModalOrder from "../components/modal/ModalOrder.vue";
 import {IProducts} from "../types/Products";
 import {useCartStore} from "../store/cart";
@@ -9,9 +9,8 @@ import getSalePrice from "../utils/getSalePrice";
 const isSendFormModalOpen = ref<boolean>(false);
 
 const {cartProducts, clearCart, getCounterByCartItems, getTotalPriceByCartItems} = useCartStore()
-const counterProducts = getCounterByCartItems()
+const counterProducts = computed<number>(() => getCounterByCartItems())
 const products = ref<IProducts[]>(cartProducts)
-const totalPrice = getTotalPriceByCartItems
 </script>
 
 <template>
@@ -34,10 +33,10 @@ const totalPrice = getTotalPriceByCartItems
       <div v-if="products.length" class="cart__lower">
         <ul class="cart__price">
           <li class="cart__price-item">
-            <b>Итого:</b> {{ totalPrice }}$
+            <b>Итого:</b> {{ getSalePrice(getTotalPriceByCartItems, 0) }}$
           </li>
           <li class="cart__price-item">
-            <b>Скидка 25%:</b> {{ getSalePrice(totalPrice, 25) }}$
+            <b>Скидка 25%:</b> {{ getSalePrice(getTotalPriceByCartItems, 25) }}$
           </li>
         </ul>
 

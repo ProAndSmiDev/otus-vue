@@ -9,13 +9,9 @@ interface Props {
   product: IProducts
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 const isSendFormModalOpen = ref<boolean>(false)
-const product = {
-  item: props.product.item,
-  qty: 1,
-}
 
 function openSendFormModal(e: Event) {
   e.preventDefault()
@@ -25,26 +21,26 @@ function openSendFormModal(e: Event) {
 
 <template>
   <div class="products-item">
-    <RouterLink :to="`/products/${product.item.id}`" class="products-item__link">
+    <RouterLink :to="`/products/${product.id}`" class="products-item__link">
       <article class="products-item__wrapper">
         <header class="products-item__header">
-          <img :src="product.item.image" alt="Фото продукта" class="products-item__photo">
+          <img :src="product.image" alt="Фото продукта" class="products-item__photo">
         </header>
 
         <main class="products-item__content">
           <h3 class="products-item__title">
-            {{ product.item.title }}
+            {{ product.title }}
           </h3>
 
           <p class="products-item__description">
-            {{ product.item.description }}
+            {{ product.description }}
           </p>
         </main>
 
         <footer class="products-item__footer">
           <p class="products-item__price">
-            <del class="products-item__price--normal">{{ product.item.price }}$</del>
-            <b class="products-item__price--sale">{{ getSalePrice(product.item.price, 25) }}$</b>
+            <del class="products-item__price--normal">{{ product.price }}$</del>
+            <b class="products-item__price--sale">{{ getSalePrice(product.price, 25) }}$</b>
           </p>
           <button
               @click="openSendFormModal"

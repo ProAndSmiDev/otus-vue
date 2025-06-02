@@ -1,31 +1,35 @@
 <script setup lang="ts">
 import ProductsItem from "./ProductsItem.vue";
-import {ref, computed} from "vue";
+import {ref, computed, watch, onMounted, toRaw, unref, onBeforeMount} from "vue";
 import {Field, Form} from "vee-validate";
-import {IProductsItem} from "../../types/Products";
-
-const props = defineProps<{
-  products: IProductsItem[]
-  isLoading: boolean
-}>()
+import {useProductsStore} from "../../store/products";
 
 const searchInput = ref<string>('');
 const searchQuery = ref<string>('');
+const store = useProductsStore()
+const products = computed(() => [...store.products])
+
+onMounted(async () => {
+  await store.fetchProducts()
+})
 
 const filteredProducts = computed(() => {
   const query = searchQuery.value.trim().toLowerCase();
 
-  if (!query) return props.products;
+  if (!query) {
+    return products.value;
+  }
 
-  const numberQuery = parseFloat(query);
+  return products.value.filter((product: any) => {
+    if (!product) return false;
 
-  return props.products.filter((product: IProductsItem) => {
     const nameMatch = product.title.toLowerCase().includes(query);
-    const priceMatch = !isNaN(numberQuery) && product.price === numberQuery;
+    const priceMatch =
+        !isNaN(parseFloat(query)) && product.price === parseFloat(query);
 
     return nameMatch || priceMatch;
-  })
-})
+  });
+});
 
 function handleSearch() {
   searchQuery.value = searchInput.value;
@@ -46,13 +50,13 @@ function handleSearch() {
       </button>
     </Form>
 
-    <span v-if="isLoading" class="products-section__loader">
+    <span v-if="store.isLoading" class="products-section__loader">
       Загрузка, подождите...
     </span>
 
     <ul v-else class="products-section__list">
       <li v-for="product in filteredProducts" :key="product.id" class="products-section__item">
-        <ProductsItem :product="{item: product, qty: 1}" class="products-section__product" />
+        <ProductsItem :product class="products-section__product" />
       </li>
     </ul>
   </section>

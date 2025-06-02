@@ -1,14 +1,14 @@
-import {useProducts} from "./useProducts";
+import {useProductsStore} from "../store/products";
 import {computed, ComputedRef} from "vue";
-import {IProductsItem} from "../types/Products";
+import {IProducts} from "../types/Products";
 
 export function useProductById(productId: number) {
-    const { products, isLoading } = useProducts();
+    const { products, isLoading } = useProductsStore();
 
-    const product: ComputedRef<IProductsItem | undefined> = computed(() => {
-        if (!products.value) return undefined
+    const product: ComputedRef<IProducts | undefined> = computed(() => {
+        if (!products) return undefined
 
-        return products.value.find(p => p.id === productId)
+        return products.find(p => p.id === productId)
     })
 
     return {

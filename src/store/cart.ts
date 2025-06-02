@@ -1,20 +1,17 @@
-import {defineStore} from "pinia";
-import {computed, ref} from "vue";
-import {IProducts} from "../types/Products";
+import {defineStore} from "pinia"
+import {computed, ref} from "vue"
+import {IProducts} from "../types/Products"
 
 export const useCartStore = defineStore("cart", () => {
     const cartProducts = ref<IProducts[]>([])
 
     const addToCart = (product: IProducts) => {
-        const existingProductIndex = cartProducts.value.findIndex(item => item.item?.id === product.item.id);
+        const existingProductIndex = cartProducts.value.findIndex(item => item.id === product.id)
 
         if (existingProductIndex !== -1) {
-            cartProducts.value[existingProductIndex].qty! += product.qty;
+            cartProducts.value[existingProductIndex].qty += 1
         } else {
-            cartProducts.value.push({
-                item: product.item,
-                qty: product.qty,
-            });
+            cartProducts.value.push({...product, qty: 1});
         }
     }
 
@@ -27,18 +24,18 @@ export const useCartStore = defineStore("cart", () => {
     }
 
     const addToCartById = (productId: number) => {
-        const product = cartProducts.value.find((product) => product.item.id === productId)
+        const product = cartProducts.value.find((product) => product.id === productId)
 
         product.qty++
     }
 
     const removeFromCart = (productId: number) => {
-        const product = cartProducts.value.find((product) => product.item.id === productId)
+        const product = cartProducts.value.find((product) => product.id === productId)
 
         if (product.qty > 1) {
             product.qty--
         } else {
-            const index = cartProducts.value.findIndex((product) => product.item.id === productId);
+            const index = cartProducts.value.findIndex((product) => product.id === productId);
             if (index !== -1) {
                 cartProducts.value.splice(index, 1);
             }
@@ -47,7 +44,7 @@ export const useCartStore = defineStore("cart", () => {
 
     const getTotalPriceByCartItems = computed(() => {
         return cartProducts.value.reduce((total, product) => {
-            return total + (product.item?.price || 0) * (product.qty || 0);
+            return total + (product.price || 0) * (product.qty || 0);
         }, 0)
     })
 
