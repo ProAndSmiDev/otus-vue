@@ -23,7 +23,7 @@ const {resetForm} = useForm()
 const formFields = [
   {
     id: 1,
-    label: '*Ваше имя:',
+    label: 'Ваше имя:',
     name: 'userName',
     type: 'text',
     rules: 'validateName',
@@ -31,7 +31,7 @@ const formFields = [
   },
   {
     id: 2,
-    label: '*E-mail:',
+    label: 'E-mail:',
     name: 'userEmail',
     type: 'email',
     rules: 'validateEmail',
@@ -39,7 +39,7 @@ const formFields = [
   },
   {
     id: 3,
-    label: '*Телефон:',
+    label: 'Телефон:',
     name: 'userPhone',
     type: 'phone',
     rules: 'validatePhone',
@@ -47,7 +47,7 @@ const formFields = [
   },
   {
     id: 4,
-    label: '*Адрес доставки:',
+    label: 'Адрес доставки:',
     name: 'userAddress',
     type: 'text',
     rules: 'validateAddress',

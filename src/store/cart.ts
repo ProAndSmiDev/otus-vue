@@ -1,20 +1,16 @@
 import {defineStore} from "pinia";
-import {computed, ref, watch, unref} from "vue";
-import {IProducts, IProductsItem} from "../types/Products";
-import {useProductById} from "../composables/useProductById";
+import {computed, ref} from "vue";
+import {IProducts} from "../types/Products";
 
 export const useCartStore = defineStore("cart", () => {
-    const cartProducts = ref<IProducts[]>([]) // массив товаров в корзине с их количеством
+    const cartProducts = ref<IProducts[]>([])
 
     const addToCart = (product: IProducts) => {
-        // Проверяем, есть ли уже товар в корзине
         const existingProductIndex = cartProducts.value.findIndex(item => item.item?.id === product.item.id);
 
         if (existingProductIndex !== -1) {
-            // Если товар уже есть, увеличиваем его количество
             cartProducts.value[existingProductIndex].qty! += product.qty;
         } else {
-            // Если товара нет в корзине, добавляем его
             cartProducts.value.push({
                 item: product.item,
                 qty: product.qty,
