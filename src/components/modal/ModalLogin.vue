@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import {ref} from 'vue'
 import {useValidation} from "../../composables/useValidation";
-import {Form, Field, ErrorMessage, defineRule} from "vee-validate"
+import {Form, Field, ErrorMessage, defineRule, useResetForm} from "vee-validate"
 import UiModal from "../ui/modal/UiModal.vue";
+import {useAuth} from "../../composables/useAuth";
+import {useRouter} from "vue-router";
 
+const props = defineProps<{
+  isOpened: boolean
+}>()
 const rules = useValidation()
 
 Object.entries(rules).forEach(([name, validator]) => {
@@ -29,6 +34,33 @@ const formFields = [
   },
 ]
 const modalTitle = ref<string>('Вход в систему')
+
+const router = useRouter()
+const {login, isAuth} = useAuth()
+const resetForm = useResetForm()
+const emit = defineEmits(['close-modal'])
+const isContentVisible = ref(false)
+const notice = ref<string>('')
+
+const handleCloseModal = () => {
+  resetForm()
+  emit('close-modal')
+}
+
+const handleSubmit = (values: any) => {
+  const { userLogin, userPassword } = values
+
+  if (!isAuth.value) {
+    login(userLogin, userPassword)
+    resetForm()
+    notice.value = 'Вы успешно вошли в систему! ^_^'
+  } else {
+    console.warn('Вы уже авторизованы!')
+    notice.value = 'Вы уже в системе! :)'
+  }
+
+  isContentVisible.value = true
+}
 </script>
 
 <template>
@@ -36,8 +68,9 @@ const modalTitle = ref<string>('Вход в систему')
       :title="modalTitle"
       class="modal-login"
       narrow
+      @close-modal="handleCloseModal"
   >
-    <Form class="modal-login__form">
+    <Form v-if="!isContentVisible" @submit="handleSubmit" class="modal-login__form">
       <label
           v-for="field in formFields"
           :key="field.id"
@@ -61,6 +94,10 @@ const modalTitle = ref<string>('Вход в систему')
         Войти
       </button>
     </Form>
+
+    <p v-else class="modal-login__notice">
+      {{ notice }}
+    </p>
   </UiModal>
 </template>
 

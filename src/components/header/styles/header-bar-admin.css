@@ -1,0 +1,23 @@
+.header-bar-admin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 40px;
+    background-color: rgb(70, 35, 17);
+    border-top: 3px solid hsl(21, 85%, 13%);
+}
+
+.header-bar-admin .header-bar-admin__link {
+    color: rgb(255,255,255);
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 24px;
+    line-height: 29px;
+    transition: color 0.3s ease-in-out;
+}
+
+.header-bar-admin .header-bar-admin__link:hover,
+.header-bar-admin .header-bar-admin__link--active {
+    color: rgb(185, 120, 93);
+}

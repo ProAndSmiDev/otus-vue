@@ -2,6 +2,9 @@ import {createWebHistory, createRouter} from "vue-router"
 
 import home from "../pages/home.vue"
 import productPage from "../pages/products/[id].vue"
+import {useAuth} from "../composables/useAuth";
+
+const { isAuth } = useAuth()
 
 const router = [
     {
@@ -25,7 +28,7 @@ const router = [
             isAuthenticated: true
         },
         beforeEnter: (to, from, next) => {
-            if (to.meta.isAuthenticated) {
+            if (isAuth.value) {
                 next()
             } else {
                 next('/')

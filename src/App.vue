@@ -1,11 +1,19 @@
 <script setup lang="ts">
 import {RouterView} from "vue-router";
 import HeaderBar from "./components/header/HeaderBar.vue";
+import HeaderBarAdmin from "./components/header/HeaderBarAdmin.vue";
+import {useAuth} from "./composables/useAuth";
+
+const { isAuth } = useAuth()
 </script>
 
 <template>
   <div class="app">
-    <HeaderBar class="app__header" />
+    <div class="app__upper">
+      <HeaderBar class="app__header" />
+      <HeaderBarAdmin v-if="isAuth" class="app__bar" />
+    </div>
+
     <RouterView />
   </div>
 </template>

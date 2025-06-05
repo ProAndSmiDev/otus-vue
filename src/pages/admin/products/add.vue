@@ -70,7 +70,6 @@ onMounted(async () => {
 
 <template>
   <section class="admin-products-add">
-    {{ store.products }}
     <div class="admin-products-add__wrapper">
       <h1 class="admin-products-add__title">Добавление нового продукта</h1>
 

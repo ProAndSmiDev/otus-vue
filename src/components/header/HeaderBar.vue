@@ -4,12 +4,14 @@ import {RouterLink} from "vue-router";
 import {useCartStore} from "../../store/cart";
 import {computed, ref} from "vue";
 import ModalLogin from "../modal/ModalLogin.vue";
+import {useAuth} from "../../composables/useAuth";
 
-const { getCounterByCartItems } = useCartStore()
+const {getCounterByCartItems} = useCartStore()
+const {isAuth, logout} = useAuth()
 const cartCounter = computed(() => {
   return getCounterByCartItems()
 })
-const isLoginModalOpen = ref<boolean>(false)
+const isOpened = ref<boolean>(false)
 </script>
 
 <template>
@@ -17,8 +19,11 @@ const isLoginModalOpen = ref<boolean>(false)
     <HeaderMenu class="header-bar__menu" />
 
     <div class="header-bar__actions">
-      <button @click="isLoginModalOpen = true" type="button" class="header-bar__login">
+      <button v-if="!isAuth" @click="isOpened = true" type="button" class="header-bar__login">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M13 2a5 5 0 0 0-5 5 1 1 0 0 0 2 0 3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-4a3 3 0 0 1-3-3 1 1 0 1 0-2 0 5 5 0 0 0 5 5h4a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5h-4Z"/><path fill="currentColor" d="M3 11a1 1 0 1 0 0 2h8.3a39.3 39.3 0 0 0-1 1.3l-.1.1.8.6-.8-.6a1 1 0 0 0 1.6 1.2 28.8 28.8 0 0 1 2.4-2.9l.7-.7-.7-.7A22.9 22.9 0 0 1 12 8.5a1 1 0 0 0-1.7 1L11 9l-.8.6a30 30 0 0 0 1 1.4H3Z"/></svg>
+      </button>
+      <button v-else @click="logout" type="button" class="header-bar__logout">
+        <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12H2m0 0 3.5-3M2 12l3.5 3"/><path stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M9 7c.01-2.18.11-3.35.88-4.12C10.76 2 12.18 2 15 2h1c2.83 0 4.24 0 5.12.88.88.88.88 2.3.88 5.12v8c0 2.83 0 4.24-.88 5.12-.77.77-1.94.87-4.12.88m-8-5c.01 2.18.11 3.35.88 4.12.64.64 1.57.82 3.12.86"/></svg>
       </button>
       <RouterLink to="/cart" class="header-bar__cart" activeClass="header-bar__cart--active">
         <span class="header-bar__cart-counter">{{ cartCounter }}</span>
@@ -27,10 +32,7 @@ const isLoginModalOpen = ref<boolean>(false)
       </RouterLink>
     </div>
 
-    <ModalLogin
-        v-if="isLoginModalOpen"
-        @close-modal="() => isLoginModalOpen = false"
-    />
+    <ModalLogin v-if="isOpened" :isOpened @close-modal="isOpened = false" />
   </header>
 </template>
 
