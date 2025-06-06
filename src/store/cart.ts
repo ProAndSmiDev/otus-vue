@@ -8,11 +8,11 @@ export const useCartStore = defineStore("cart", () => {
     const discountPercentage = ref<number>(25)
 
     const saveCartToLocalStorage = () => {
-        localStorage.setItem('localProducts', JSON.stringify(cartProducts.value));
+        localStorage.setItem('cartProducts', JSON.stringify(cartProducts.value));
     }
 
     const loadCartFromLocalStorage = () => {
-        const stored = localStorage.getItem('localProducts');
+        const stored = localStorage.getItem('cartProducts');
 
         if (stored) {
             cartProducts.value = JSON.parse(stored);
@@ -31,22 +31,23 @@ export const useCartStore = defineStore("cart", () => {
         const existingProduct = cartProducts.value.find(item => item.id === product.id);
 
         if (existingProduct) {
+            // Увеличиваем qty.inCart у уже существующего товара
             existingProduct.qty.inCart += 1;
-            console.log(product.qty.inCart = existingProduct.qty.inCart);
+            syncProductQty(product.id, existingProduct.qty.inCart);
         } else {
-            product.qty.inCart = (product.qty.inCart || 0) + 1;
-
-            cartProducts.value.push({
+            // Создаём новый объект из переданного продукта, устанавливаем inCart в 1
+            const newProduct = {
                 ...product,
                 qty: {
-                    inCart: product.qty.inCart,
-                    available: product.qty.available,
+                    ...product.qty,
+                    inCart: 1,
                 }
-            });
+            };
+            cartProducts.value.push(newProduct);
+            syncProductQty(product.id, 1);
         }
 
-        saveCartToLocalStorage()
-        syncProductQty(product.id, product.qty.inCart)
+        saveCartToLocalStorage();
     }
 
     const getCounterByCartItems = () => {

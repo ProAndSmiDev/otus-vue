@@ -6,6 +6,7 @@ import axios from "axios"
 import {IProducts} from "../../types/Products"
 import UiModal from "../ui/modal/UiModal.vue"
 import {useRouter} from "vue-router"
+import {useCartStore} from "../../store/cart";
 
 const props = defineProps<{
   products: IProducts[]
@@ -21,6 +22,7 @@ Object.entries(rules).forEach(([name, validator]) => {
 
 const isSentForm = ref(false)
 const {resetForm} = useForm()
+const {clearCart} = useCartStore()
 
 const formFields = [
   {
@@ -78,9 +80,9 @@ async function sendForm(values: FormOrderValues | any) {
         phone: values.userPhone,
         address: values.userAddress,
         agreement: values.userAgreement,
-        productName: item.product.title,
-        productPrice: item.product.price,
-        qty: item.qty || 1,
+        productName: item.title,
+        productPrice: item.price,
+        qty: item.qty.inCart || 1,
       })
     })
 
@@ -94,8 +96,8 @@ async function sendForm(values: FormOrderValues | any) {
 
   setTimeout(() => {
     const routerLink = props.to ? props.to : '/'
-
     router.push(routerLink)
+    clearCart()
   }, 5000)
 }
 
@@ -111,7 +113,6 @@ function handleCloseModal() {
       class="modal-order"
       @close-modal="handleCloseModal"
   >
-    {{ products }}
     <Form
         v-if="!isSentForm"
         class="modal-order__form"
@@ -155,7 +156,7 @@ function handleCloseModal() {
         В ближайшее время с Вами свяжется наш менеджер для уточнения деталей.
       </p>
       <p class="modal-order__notice">
-        Через 15 секунд Вы будете перенаправлены на главную страницу.
+        Через 5 секунд Вы будете перенаправлены на страницу.
       </p>
     </template>
   </UiModal>
