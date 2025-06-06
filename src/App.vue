@@ -60,16 +60,20 @@ a {
   flex-direction: column;
   row-gap: 24px;
   min-height: 100vh;
+  align-items: center;
 }
 
 .app .app__upper,
 .app .app__footer {
   flex: 0 0 auto;
+  align-self: stretch;
 }
 
 .app .app__content {
   flex: 1 0 auto;
   display: grid;
+  width: 100%;
+  max-width: 1820px;
 }
 
 .app .app__header {

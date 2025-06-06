@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import {onMounted} from "vue";
-import {Field, Form, useResetForm} from "vee-validate";
+import {onMounted, ref} from "vue"
+import {Field, Form, useResetForm} from "vee-validate"
 import {useProductsStore} from "../../../store/products"
-import {IProducts} from "../../../types/Products";
+import {IProducts} from "../../../types/Products"
+import ModalProductAdd from "../../../components/modal/ModalProductAdd.vue"
+import {useRouter} from "vue-router";
 
 const store = useProductsStore()
 const resetForm = useResetForm()
+const isProductAdded = ref<boolean>(false)
+const router = useRouter()
 const formFields = [
   {
     id: 1,
@@ -64,6 +68,12 @@ function addProductWithData(values: Record<string, any>) {
 
   store.addProduct(formData);
   resetForm()
+  isProductAdded.value = true
+}
+
+function handleCloseModal() {
+  router.go(0)
+  isProductAdded.value = false
 }
 
 onMounted(async () => {
@@ -106,6 +116,8 @@ onMounted(async () => {
           Добавить продукт
         </button>
       </Form>
+
+      <ModalProductAdd v-if="isProductAdded" @close-modal="handleCloseModal" />
     </div>
   </section>
 </template>

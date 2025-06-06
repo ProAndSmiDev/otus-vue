@@ -1,9 +1,8 @@
 .products {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .products .products__wrapper {
-    display: flex;
-    align-items: center;
+    width: 100%;
 }
