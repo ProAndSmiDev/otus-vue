@@ -82,8 +82,7 @@ async function sendForm(values: FormOrderValues | any) {
       })
     })
 
-    const response = await axios.post('https://httpbin.org/post', data)
-    console.log('Ответ сервера', response.data)
+    await axios.post('https://httpbin.org/post', data)
   } catch (error) {
     console.log('Ошибка при отправке:', error)
   }

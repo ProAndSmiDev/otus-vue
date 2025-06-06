@@ -4,13 +4,14 @@ import {ref, computed} from "vue";
 import ModalOrder from "../components/modal/ModalOrder.vue";
 import {IProducts} from "../types/Products";
 import {useCartStore} from "../store/cart";
-import getSalePrice from "../utils/getSalePrice";
 
 const isSendFormModalOpen = ref<boolean>(false);
 
 const {cartProducts, clearCart, getCounterByCartItems, getTotalPriceByCartItems} = useCartStore()
 const counterProducts = computed<number>(() => getCounterByCartItems())
 const products = ref<IProducts[]>(cartProducts)
+const {totalPrice} = getTotalPriceByCartItems
+const {saleTotalPrice} = getTotalPriceByCartItems
 </script>
 
 <template>
@@ -33,10 +34,10 @@ const products = ref<IProducts[]>(cartProducts)
       <div v-if="products.length" class="cart__lower">
         <ul class="cart__price">
           <li class="cart__price-item">
-            <b>Итого:</b> {{ getSalePrice(getTotalPriceByCartItems, 0) }}$
+            <b>Итого:</b> {{ totalPrice.toFixed(2) }}$
           </li>
           <li class="cart__price-item">
-            <b>Скидка 25%:</b> {{ getSalePrice(getTotalPriceByCartItems, 25) }}$
+            <b>Скидка 25%:</b> {{ saleTotalPrice.toFixed(2) }}$
           </li>
         </ul>
 

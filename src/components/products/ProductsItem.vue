@@ -40,7 +40,7 @@ function openSendFormModal(e: Event) {
         <footer class="products-item__footer">
           <p class="products-item__price">
             <del class="products-item__price--normal">{{ product.price }}$</del>
-            <b class="products-item__price--sale">{{ getSalePrice(product.price, 25) }}$</b>
+            <b class="products-item__price--sale">{{ getSalePrice(product.price) }}$</b>
           </p>
           <button
               @click="openSendFormModal"

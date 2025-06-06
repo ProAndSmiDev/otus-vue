@@ -1,22 +1,54 @@
 import {defineStore} from "pinia"
 import {computed, ref} from "vue"
 import {IProducts} from "../types/Products"
+import getSalePrice from "../utils/getSalePrice";
 
 export const useCartStore = defineStore("cart", () => {
     const cartProducts = ref<IProducts[]>([])
+    const discountPercentage = ref<number>(25)
 
-    const addToCart = (product: IProducts) => {
-        const existingProductIndex = cartProducts.value.findIndex(item => item.id === product.id)
+    const saveCartToLocalStorage = () => {
+        localStorage.setItem('localProducts', JSON.stringify(cartProducts.value));
+    }
 
-        if (existingProductIndex !== -1) {
-            cartProducts.value[existingProductIndex].qty += 1
-        } else {
-            cartProducts.value.push({...product, qty: 1});
+    const loadCartFromLocalStorage = () => {
+        const stored = localStorage.getItem('localProducts');
+
+        if (stored) {
+            cartProducts.value = JSON.parse(stored);
+        }
+    };
+
+    const syncProductQty = (productId: number, newInCart: number) => {
+        const product = cartProducts.value.find(p => p.id === productId);
+
+        if (product) {
+            product.qty.inCart = newInCart;
         }
     }
 
+    const addToCart = (product: IProducts) => {
+        const existingProduct = cartProducts.value.find(item => item.id === product.id);
+
+        if (existingProduct) {
+            existingProduct.qty.inCart += 1;
+        } else {
+            product.qty.inCart = (product.qty.inCart || 0) + 1;
+
+            cartProducts.value.push({
+                ...product,
+                qty: {
+                    inCart: product.qty.inCart,
+                    available: product.qty.available,
+                }
+            });
+        }
+
+        syncProductQty(product.id, product.qty.inCart)
+    }
+
     const getCounterByCartItems = () => {
-        return cartProducts.value.reduce((total, product) => total + (product.qty || 0), 0);
+        return cartProducts.value.reduce((total, product) => total + (product.qty.inCart || 0), 0);
     }
 
     const clearCart = () => {
@@ -24,29 +56,51 @@ export const useCartStore = defineStore("cart", () => {
     }
 
     const addToCartById = (productId: number) => {
-        const product = cartProducts.value.find((product) => product.id === productId)
+        const productInCart = cartProducts.value.find((product) => product.id === productId)
 
-        product.qty++
+        if(productInCart) {
+            productInCart.qty.inCart++
+            syncProductQty(productId, productInCart.qty.inCart)
+        }
+
+        saveCartToLocalStorage()
     }
 
     const removeFromCart = (productId: number) => {
-        const product = cartProducts.value.find((product) => product.id === productId)
+        const productInCart = cartProducts.value.find((product) => product.id === productId)
 
-        if (product.qty > 1) {
-            product.qty--
+        if (productInCart.qty.inCart > 1) {
+            productInCart.qty.inCart--
+            syncProductQty(productId, productInCart.qty.inCart)
         } else {
             const index = cartProducts.value.findIndex((product) => product.id === productId);
+
             if (index !== -1) {
                 cartProducts.value.splice(index, 1);
             }
+
+            syncProductQty(productId, 0)
         }
+
+        saveCartToLocalStorage()
     }
 
     const getTotalPriceByCartItems = computed(() => {
-        return cartProducts.value.reduce((total, product) => {
-            return total + (product.price || 0) * (product.qty || 0);
-        }, 0)
+        const totalPrice = computed(() => cartProducts.value.reduce((sum, product) => {
+            return sum + (product.price * product.qty.inCart);
+        }, 0))
+
+        const saleTotalPrice = computed(() => cartProducts.value.reduce((sum, product) => {
+            return sum + (getSalePrice(product.price) * product.qty.inCart)
+        }, 0))
+
+        return {
+            totalPrice,
+            saleTotalPrice,
+        }
     })
+
+    loadCartFromLocalStorage();
 
     return {
         clearCart,
@@ -56,5 +110,6 @@ export const useCartStore = defineStore("cart", () => {
         removeFromCart,
         addToCartById,
         getTotalPriceByCartItems,
+        discountPercentage,
     }
 })

@@ -56,7 +56,10 @@ function addProductWithData(values: Record<string, any>) {
       rate: 0,
       count: 0
     },
-    qty: values.productQty
+    qty: {
+      inCart: 0,
+      available: values.productQty
+    }
   };
 
   store.addProduct(formData);

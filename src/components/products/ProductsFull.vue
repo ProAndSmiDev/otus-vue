@@ -41,13 +41,13 @@ const { addToCart, removeFromCart, addToCartById } = useCartStore()
     <div class="products-full__wrapper">
       <p class="products-full__price">
         <del class="products-full__price--normal">{{ product.price }}$</del>
-        <b class="products-full__price--sale">{{ getSalePrice(product.price, 25) }}$</b>
+        <b class="products-full__price--sale">{{ getSalePrice(product.price) }}$</b>
       </p>
 
       <button @click="addToCart(product)" v-if="!isCart" class="products-full__add" type="button">Добавить в корзину</button>
       <div v-else class="products-full__counter">
         <button @click="removeFromCart(product.id)" class="products-full__counter-remove">-</button>
-        <p class="products-full__counter-value">{{ product.qty }}</p>
+        <p class="products-full__counter-value">{{ product.qty.inCart }}</p>
         <button @click="addToCartById(product.id)" class="products-full__counter-add">+</button>
       </div>
     </div>

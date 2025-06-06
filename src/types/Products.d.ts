@@ -1,3 +1,8 @@
+interface IProductsQty {
+    available: number
+    inCart: number
+}
+
 interface IProductsRate {
     rate: number
     count: number
@@ -10,5 +15,5 @@ export interface IProducts {
     description: string
     image: string
     rating: IProductsRate
-    qty: number
+    qty: IProductsQty
 }
