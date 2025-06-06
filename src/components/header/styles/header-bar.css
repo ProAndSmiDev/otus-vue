@@ -7,7 +7,6 @@
 
 .header-bar .header-bar__link {
     color: rgb(255,255,255);
-    text-decoration: none;
     font-weight: 700;
     text-transform: uppercase;
     font-size: 24px;
@@ -52,7 +51,6 @@
 
 .header-bar .header-bar__cart {
     position: relative;
-    text-decoration: none;
     width: 36px;
 }
 

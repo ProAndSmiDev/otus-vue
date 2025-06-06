@@ -1,0 +1,9 @@
+.products {
+    display: flex;
+    justify-content: center;
+}
+
+.products .products__wrapper {
+    display: flex;
+    align-items: center;
+}

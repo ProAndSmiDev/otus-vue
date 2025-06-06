@@ -4,8 +4,10 @@ import ProductsSection from "../../components/products/ProductsSection.vue";
 
 <template>
   <main class="products">
-    <ProductsSection />
+    <div class="products__wrapper">
+      <ProductsSection />
+    </div>
   </main>
 </template>
 
-<style scoped></style>
+<style scoped src="./styles/products.css"></style>

@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import {ref} from 'vue'
-import {useForm} from "vee-validate";
-import {Field, Form, ErrorMessage, defineRule} from "vee-validate";
-import {useValidation} from "../../composables/useValidation";
-import axios from "axios";
-import {IProducts} from "../../types/Products";
-import UiModal from "../ui/modal/UiModal.vue";
+import {Field, Form, ErrorMessage, defineRule, useForm} from "vee-validate"
+import {useValidation} from "../../composables/useValidation"
+import axios from "axios"
+import {IProducts} from "../../types/Products"
+import UiModal from "../ui/modal/UiModal.vue"
+import {useRouter} from "vue-router"
 
 const props = defineProps<{
   products: IProducts[]
+  to?: string
 }>()
 
 const rules = useValidation()
+const router = useRouter()
 
 Object.entries(rules).forEach(([name, validator]) => {
   defineRule(name, validator)
@@ -63,7 +65,7 @@ const formFields = [
   }
 ]
 
-const modalTitle = ref<string>(isSentForm ? 'Вы успешно оформили заказ!' : 'Оформить заказ')
+const modalTitle = ref<string>(isSentForm.value ? 'Вы успешно оформили заказ!' : 'Оформить заказ')
 
 async function sendForm(values: FormOrderValues | any) {
   try {
@@ -90,10 +92,11 @@ async function sendForm(values: FormOrderValues | any) {
   resetForm()
   isSentForm.value = true
 
-  // TODO: интервал для просмотра модалки и ответа сервера до его перенаправления
   setTimeout(() => {
-    window.location.href = '/'
-  }, 15000)
+    const routerLink = props.to ? props.to : '/'
+
+    router.push(routerLink)
+  }, 5000)
 }
 
 function handleCloseModal() {
@@ -108,6 +111,7 @@ function handleCloseModal() {
       class="modal-order"
       @close-modal="handleCloseModal"
   >
+    {{ products }}
     <Form
         v-if="!isSentForm"
         class="modal-order__form"

@@ -9,7 +9,9 @@ const {product} = useProductById(Number(route.params.productId))
 
 <template>
   <main class="products-id">
-    <ProductsFull :product class="products-id__full" />
+    <div class="products-id__wrapper">
+      <ProductsFull :product class="products-id__full" />
+    </div>
   </main>
 </template>
 

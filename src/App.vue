@@ -14,7 +14,13 @@ const { isAuth } = useAuth()
       <HeaderBarAdmin v-if="isAuth" class="app__bar" />
     </div>
 
-    <RouterView />
+    <div class="app__content">
+      <RouterView />
+    </div>
+
+    <footer class="app__footer">
+      Copyright by @ProAndSmiDev
+    </footer>
   </div>
 </template>
 
@@ -42,6 +48,10 @@ ul, ol {
   list-style: none;
   display: flex;
 }
+
+a {
+  text-decoration: none;
+}
 </style>
 
 <style scoped>
@@ -49,9 +59,30 @@ ul, ol {
   display: flex;
   flex-direction: column;
   row-gap: 24px;
+  min-height: 100vh;
+}
+
+.app .app__upper,
+.app .app__footer {
+  flex: 0 0 auto;
+}
+
+.app .app__content {
+  flex: 1 0 auto;
+  display: grid;
 }
 
 .app .app__header {
   width: 100%;
+}
+
+.app .app__footer {
+  display: flex;
+  justify-content: center;
+  padding: 20px 40px;
+  background-color: rgb(100,50,25);
+  font-size: 18px;
+  line-height: 25px;
+  color: #fff;
 }
 </style>

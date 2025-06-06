@@ -20,7 +20,12 @@ const router = [
     },
     {
         path: '/cart',
-        component: () => import('../pages/cart.vue') },
+        component: () => import('../pages/cart/index.vue')
+    },
+    {
+        path: '/cart/success',
+        component: () => import('../pages/cart/success.vue'),
+    },
     {
         path: '/admin/products/add',
         component: () => import('../pages/admin/products/add.vue'),

@@ -32,6 +32,7 @@ export const useCartStore = defineStore("cart", () => {
 
         if (existingProduct) {
             existingProduct.qty.inCart += 1;
+            console.log(product.qty.inCart = existingProduct.qty.inCart);
         } else {
             product.qty.inCart = (product.qty.inCart || 0) + 1;
 
@@ -44,6 +45,7 @@ export const useCartStore = defineStore("cart", () => {
             });
         }
 
+        saveCartToLocalStorage()
         syncProductQty(product.id, product.qty.inCart)
     }
 
@@ -53,6 +55,7 @@ export const useCartStore = defineStore("cart", () => {
 
     const clearCart = () => {
         cartProducts.value.length = 0
+        saveCartToLocalStorage()
     }
 
     const addToCartById = (productId: number) => {

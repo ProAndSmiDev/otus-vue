@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import ProductsFull from "../components/products/ProductsFull.vue";
+import ProductsFull from "../../components/products/ProductsFull.vue";
 import {ref, computed} from "vue";
-import ModalOrder from "../components/modal/ModalOrder.vue";
-import {IProducts} from "../types/Products";
-import {useCartStore} from "../store/cart";
+import ModalOrder from "../../components/modal/ModalOrder.vue";
+import {IProducts} from "../../types/Products";
+import {useCartStore} from "../../store/cart";
 
 const isSendFormModalOpen = ref<boolean>(false);
 
@@ -58,6 +58,7 @@ const {saleTotalPrice} = getTotalPriceByCartItems
       <ModalOrder
           v-if="isSendFormModalOpen"
           :products
+          to="/cart/success"
           @close-modal="() => isSendFormModalOpen = false"
       />
     </div>
