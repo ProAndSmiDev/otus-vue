@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PeopleSection from "../components/people/PeopleSection.vue";
+import PeopleSection from "@components/people/PeopleSection.vue";
 </script>
 
 <template>

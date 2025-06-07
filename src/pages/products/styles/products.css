@@ -1,0 +1,8 @@
+.products {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.products .products__wrapper {
+    width: 100%;
+}

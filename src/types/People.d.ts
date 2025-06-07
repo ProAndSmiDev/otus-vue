@@ -1,5 +1,5 @@
-import { Gender } from './enums/Gender';
-import { Status } from './enums/Status';
+import { Gender } from '@types/enums/Gender';
+import { Status } from '@types/enums/Status';
 
 interface IPeopleInfo {
     age: number,
@@ -13,5 +13,5 @@ interface IPeople {
     avatar: string,
     name: string,
     status: Status,
-    info: PeopleInfo
+    info: IPeopleInfo
 }
