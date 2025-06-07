@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {RouterView} from "vue-router";
-import HeaderBar from "./components/header/HeaderBar.vue";
-import HeaderBarAdmin from "./components/header/HeaderBarAdmin.vue";
-import {useAuth} from "./composables/useAuth";
+import HeaderBar from "@components/header/HeaderBar.vue";
+import HeaderBarAdmin from "@components/header/HeaderBarAdmin.vue";
+import {useAuth} from "@composables/useAuth";
 
 const { isAuth } = useAuth()
 </script>
@@ -23,36 +23,6 @@ const { isAuth } = useAuth()
     </footer>
   </div>
 </template>
-
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-button {
-  background-color: transparent;
-  border: unset;
-  cursor: pointer;
-}
-
-img {
-  width: auto;
-  height: 100%;
-  object-fit: cover;
-}
-
-ul, ol {
-  list-style: none;
-  display: flex;
-}
-
-a {
-  text-decoration: none;
-}
-</style>
 
 <style scoped>
 .app {

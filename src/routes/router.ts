@@ -1,8 +1,8 @@
 import {createWebHistory, createRouter} from "vue-router"
 
-import home from "../pages/home.vue"
-import productPage from "../pages/products/[id].vue"
-import {useAuth} from "../composables/useAuth";
+import home from "@pages/home.vue"
+import productPage from "@pages/products/[id].vue"
+import {useAuth} from "@composables/useAuth"
 
 const { isAuth } = useAuth()
 
@@ -13,22 +13,22 @@ const router = [
     },
     {
         path: '/products',
-        component: () => import('../pages/products/index.vue') },
+        component: () => import('@pages/products/index.vue') },
     {
         path: '/products/:productId',
         component: productPage,
     },
     {
         path: '/cart',
-        component: () => import('../pages/cart/index.vue')
+        component: () => import('@pages/cart/index.vue')
     },
     {
         path: '/cart/success',
-        component: () => import('../pages/cart/success.vue'),
+        component: () => import('@pages/cart/success.vue'),
     },
     {
         path: '/admin/products/add',
-        component: () => import('../pages/admin/products/add.vue'),
+        component: () => import('@pages/admin/products/add.vue'),
         meta: {
             isAuthenticated: true
         },

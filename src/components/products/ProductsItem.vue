@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {ref} from 'vue';
-import ModalOrder from "../modal/ModalOrder.vue";
-import {IProducts} from "../../types/Products";
+import ModalOrder from "@components/modal/ModalOrder.vue";
+import {IProducts} from "@types/Products";
 import {RouterLink} from "vue-router";
-import getSalePrice from "../../utils/getSalePrice";
+import getSalePrice from "@utils/getSalePrice";
 
 interface Props {
   product: IProducts

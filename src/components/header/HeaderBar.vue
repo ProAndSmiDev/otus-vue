@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import HeaderMenu from "./HeaderMenu.vue";
+import HeaderMenu from "@components/header/HeaderMenu.vue";
 import {RouterLink} from "vue-router";
-import {useCartStore} from "../../store/cart";
+import {useCartStore} from "@store/cart";
 import {computed, ref} from "vue";
-import ModalLogin from "../modal/ModalLogin.vue";
-import {useAuth} from "../../composables/useAuth";
+import ModalLogin from "@components/modal/ModalLogin.vue";
+import {useAuth} from "@composables/useAuth";
 
 const {getCounterByCartItems} = useCartStore()
 const {isAuth, logout} = useAuth()

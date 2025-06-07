@@ -1,7 +1,7 @@
-import { defineStore } from "pinia";
-import { ref } from "vue";
-import axios from "axios";
-import { IProducts } from "../types/Products";
+import { defineStore } from "pinia"
+import { ref } from "vue"
+import axios from "axios"
+import { IProducts } from "@types/Products"
 
 export const useProductsStore = defineStore("products", () => {
     const products = ref<IProducts[]>([])
@@ -27,19 +27,19 @@ export const useProductsStore = defineStore("products", () => {
         } finally {
             isLoading.value = false
         }
-    };
+    }
 
     const addProduct = (newProduct: IProducts) => {
-        products.value.push(newProduct);
-        const localProducts = JSON.parse(localStorage.getItem("localProducts") || "[]");
-        localProducts.push(newProduct);
-        localStorage.setItem("localProducts", JSON.stringify(localProducts));
-    };
+        products.value.push(newProduct)
+        const localProducts = JSON.parse(localStorage.getItem("localProducts") || "[]")
+        localProducts.push(newProduct)
+        localStorage.setItem("localProducts", JSON.stringify(localProducts))
+    }
 
     return {
         products,
         isLoading,
         fetchProducts,
         addProduct,
-    };
-});
+    }
+})

@@ -1,4 +1,4 @@
-import {useCartStore} from "../store/cart";
+import {useCartStore} from "@store/cart";
 
 export default (price: number | string): number => {
     const {discountPercentage} = useCartStore()

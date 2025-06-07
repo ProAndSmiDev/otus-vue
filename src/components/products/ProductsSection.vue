@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import ProductsItem from "./ProductsItem.vue";
-import {ref, computed, watch, onMounted, toRaw, unref, onBeforeMount} from "vue";
-import {Field, Form} from "vee-validate";
-import {useProductsStore} from "../../store/products";
+import ProductsItem from "./ProductsItem.vue"
+import {ref, computed, onMounted} from "vue"
+import {Field, Form} from "vee-validate"
+import {useProductsStore} from "@store/products"
 
-const searchInput = ref<string>('');
-const searchQuery = ref<string>('');
+const searchInput = ref<string>('')
+const searchQuery = ref<string>('')
 const store = useProductsStore()
 const products = computed(() => [...store.products])
 
@@ -14,25 +14,25 @@ onMounted(async () => {
 })
 
 const filteredProducts = computed(() => {
-  const query = searchQuery.value.trim().toLowerCase();
+  const query = searchQuery.value.trim().toLowerCase()
 
   if (!query) {
-    return products.value;
+    return products.value
   }
 
   return products.value.filter((product: any) => {
-    if (!product) return false;
+    if (!product) return false
 
-    const nameMatch = product.title.toLowerCase().includes(query);
+    const nameMatch = product.title.toLowerCase().includes(query)
     const priceMatch =
-        !isNaN(parseFloat(query)) && product.price === parseFloat(query);
+        !isNaN(parseFloat(query)) && product.price === parseFloat(query)
 
-    return nameMatch || priceMatch;
-  });
-});
+    return nameMatch || priceMatch
+  })
+})
 
 function handleSearch() {
-  searchQuery.value = searchInput.value;
+  searchQuery.value = searchInput.value
 }
 </script>
 

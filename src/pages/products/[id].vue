@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useRoute} from "vue-router"
-import ProductsFull from "../../components/products/ProductsFull.vue"
-import {useProductById} from "../../composables/useProductById"
+import ProductsFull from "@components/products/ProductsFull.vue"
+import {useProductById} from "@composables/useProductById"
 
 const route = useRoute()
 const {product} = useProductById(Number(route.params.productId))

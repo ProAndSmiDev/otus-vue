@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {ref} from 'vue'
-import {useValidation} from "../../composables/useValidation";
+import {useValidation} from "@composables/useValidation";
 import {Form, Field, ErrorMessage, defineRule, useResetForm} from "vee-validate"
-import UiModal from "../ui/modal/UiModal.vue";
-import {useAuth} from "../../composables/useAuth";
+import UiModal from "@components/ui/modal/UiModal.vue";
+import {useAuth} from "@composables/useAuth";
 import {useRouter} from "vue-router";
 
 const props = defineProps<{

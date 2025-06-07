@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {IProducts} from "../../types/Products"
-import getSalePrice from "../../utils/getSalePrice"
-import { useCartStore } from "../../store/cart"
+import {IProducts} from "@types/Products"
+import getSalePrice from "@utils/getSalePrice"
+import { useCartStore } from "@store/cart"
 
 defineProps<{
   product: IProducts

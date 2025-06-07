@@ -1,6 +1,6 @@
-import {useProductsStore} from "../store/products";
+import {useProductsStore} from "@store/products";
 import {computed, ComputedRef} from "vue";
-import {IProducts} from "../types/Products";
+import {IProducts} from "@types/Products";
 
 export function useProductById(productId: number) {
     const { products, isLoading } = useProductsStore();

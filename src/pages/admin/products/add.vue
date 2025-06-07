@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue"
 import {Field, Form, useResetForm} from "vee-validate"
-import {useProductsStore} from "../../../store/products"
-import {IProducts} from "../../../types/Products"
-import ModalProductAdd from "../../../components/modal/ModalProductAdd.vue"
-import {useRouter} from "vue-router";
+import {useProductsStore} from "@store/products"
+import {IProducts} from "@types/Products"
+import ModalProductAdd from "@components/modal/ModalProductAdd.vue"
+import {useRouter} from "vue-router"
 
 const store = useProductsStore()
 const resetForm = useResetForm()
@@ -48,7 +48,7 @@ const formFields = [
 ]
 
 function addProductWithData(values: Record<string, any>) {
-  const lastProductId = store.products.length > 0 ? store.products[store.products.length - 1].id : 0;
+  const lastProductId = store.products.length > 0 ? store.products[store.products.length - 1].id : 0
 
   const formData: IProducts = {
     id: lastProductId + 1,
@@ -66,7 +66,7 @@ function addProductWithData(values: Record<string, any>) {
     }
   };
 
-  store.addProduct(formData);
+  store.addProduct(formData)
   resetForm()
   isProductAdded.value = true
 }
@@ -77,7 +77,7 @@ function handleCloseModal() {
 }
 
 onMounted(async () => {
-  await store.fetchProducts();
+  await store.fetchProducts()
 })
 </script>
 

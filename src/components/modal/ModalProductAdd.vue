@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import UiModal from "../ui/modal/UiModal.vue";
+import UiModal from "@components/ui/modal/UiModal.vue";
 </script>
 
 <template>
