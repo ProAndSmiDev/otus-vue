@@ -8,6 +8,7 @@
             "@store/*": ["src/store/*"],
             "@utils/*": ["src/utils/*"],
             "@routes/*": ["src/routes/*"],
+            "@assets/*": ["src/assets/*"],
             "@components/*": ["src/components/*"],
             "@composables/*": ["src/composables/*"]
         }

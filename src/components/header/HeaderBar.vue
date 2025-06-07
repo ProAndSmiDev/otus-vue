@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import HeaderMenu from "@components/header/HeaderMenu.vue";
-import {RouterLink} from "vue-router";
-import {useCartStore} from "@store/cart";
-import {computed, ref} from "vue";
-import ModalLogin from "@components/modal/ModalLogin.vue";
-import {useAuth} from "@composables/useAuth";
+import HeaderMenu from "@components/header/HeaderMenu.vue"
+import {RouterLink} from "vue-router"
+import {useCartStore} from "@store/cart"
+import {computed, ref} from "vue"
+import ModalLogin from "@components/modal/ModalLogin.vue"
+import {useAuth} from "@composables/useAuth"
+import SvgLogin from "@assets/svg/SvgLogin.vue"
+import SvgLogout from "@assets/svg/SvgLogin.vue"
+import SvgCart from "@assets/svg/SvgCart.vue"
 
 const {getCounterByCartItems} = useCartStore()
 const {isAuth, logout} = useAuth()
@@ -20,15 +23,15 @@ const isOpened = ref<boolean>(false)
 
     <div class="header-bar__actions">
       <button v-if="!isAuth" @click="isOpened = true" type="button" class="header-bar__login">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M13 2a5 5 0 0 0-5 5 1 1 0 0 0 2 0 3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-4a3 3 0 0 1-3-3 1 1 0 1 0-2 0 5 5 0 0 0 5 5h4a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5h-4Z"/><path fill="currentColor" d="M3 11a1 1 0 1 0 0 2h8.3a39.3 39.3 0 0 0-1 1.3l-.1.1.8.6-.8-.6a1 1 0 0 0 1.6 1.2 28.8 28.8 0 0 1 2.4-2.9l.7-.7-.7-.7A22.9 22.9 0 0 1 12 8.5a1 1 0 0 0-1.7 1L11 9l-.8.6a30 30 0 0 0 1 1.4H3Z"/></svg>
+        <SvgLogin />
       </button>
       <button v-else @click="logout" type="button" class="header-bar__logout">
-        <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12H2m0 0 3.5-3M2 12l3.5 3"/><path stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M9 7c.01-2.18.11-3.35.88-4.12C10.76 2 12.18 2 15 2h1c2.83 0 4.24 0 5.12.88.88.88.88 2.3.88 5.12v8c0 2.83 0 4.24-.88 5.12-.77.77-1.94.87-4.12.88m-8-5c.01 2.18.11 3.35.88 4.12.64.64 1.57.82 3.12.86"/></svg>
+        <SvgLogout />
       </button>
       <RouterLink to="/cart" class="header-bar__cart" activeClass="header-bar__cart--active">
         <span class="header-bar__cart-counter">{{ cartCounter }}</span>
 
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" d="M7.5 18a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM16.5 18a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" opacity=".5"/><path fill="currentColor" d="m2.26 3.1.25-.72-.25.71Zm-.01-.8a.75.75 0 1 0-.5 1.4l.5-1.4Zm2.34 2.02.62-.42-.62.42Zm1.3 10.27-.55.51.55-.51Zm14.77-4.7.73.14-.73-.15Zm-.5 2.42.73.15-.73-.15Zm.57-5.61-.59.45.6-.45Zm-1.6 8.35-.47-.58.47.58ZM5.71 9.76V7.04H4.2v2.72h1.5ZM2.5 2.38l-.26-.09-.5 1.42.26.09.5-1.42Zm8.43 13.87h5.3v-1.5h-5.3v1.5ZM5.7 7.04c0-.7 0-1.3-.05-1.78-.06-.5-.17-.95-.45-1.36l-1.24.85c.09.13.16.31.2.67.04.38.04.88.04 1.62h1.5ZM2 3.8c.67.23 1.1.39 1.43.55.3.15.44.27.53.4L5.2 3.9A2.7 2.7 0 0 0 4.1 3c-.43-.2-.97-.4-1.6-.62l-.5 1.42Zm2.2 5.96c0 1.45.01 2.5.15 3.3.15.85.44 1.47.98 2.04l1.1-1.03c-.33-.34-.5-.67-.6-1.26-.11-.65-.13-1.56-.13-3.05H4.2Zm6.73 4.99c-1.42 0-2.4 0-3.14-.1-.72-.1-1.1-.3-1.37-.58L5.34 15.1c.6.63 1.35.9 2.25 1.03.87.12 1.98.12 3.35.12v-1.5ZM4.96 6.87h12.13v-1.5H4.96v1.5Zm14.96 2.86-.5 2.43 1.47.3.5-2.43-1.47-.3ZM17.1 6.87c.86 0 1.6 0 2.2.07.3.03.52.08.68.13.16.06.18.1.17.08l1.19-.91c-.24-.3-.57-.48-.87-.58-.3-.11-.65-.17-1-.21-.7-.08-1.54-.08-2.37-.08v1.5Zm4.3 3.16c.17-.85.32-1.56.35-2.13a2.36 2.36 0 0 0-.41-1.66l-1.19.91c.06.09.13.23.1.66a16.5 16.5 0 0 1-.32 1.93l1.47.29Zm-5.15 6.22c.76 0 1.4 0 1.92-.06.53-.07 1.02-.21 1.45-.56l-.95-1.16c-.13.1-.3.18-.69.23-.4.05-.93.05-1.73.05v1.5Zm3.18-4.1c-.16.79-.27 1.3-.4 1.7-.12.36-.23.52-.36.62l.95 1.16c.42-.35.66-.8.84-1.3.16-.5.29-1.13.44-1.87l-1.47-.3Z"/></svg>
+        <SvgCart />
       </RouterLink>
     </div>
 
