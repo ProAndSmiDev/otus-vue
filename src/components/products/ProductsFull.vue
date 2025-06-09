@@ -1,14 +1,18 @@
 <script setup lang="ts">
-import {IProductsItem} from "../../types/Products";
-import getSalePrice from "../../utils/getSalePrice";
+import {IProducts} from "@types/Products"
+import getSalePrice from "@utils/getSalePrice"
+import { useCartStore } from "@store/cart"
 
 defineProps<{
-  product: IProductsItem
+  product: IProducts
+  isCart?: boolean
 }>()
+
+const { addToCart, removeFromCart, addToCartById } = useCartStore()
 </script>
 
 <template>
-  <section class="products-full">
+  <section v-if="product" class="products-full">
     <img :src="product.image" :alt="product.title" class="products-full__img">
 
     <div class="products-full__info">
@@ -37,9 +41,15 @@ defineProps<{
     <div class="products-full__wrapper">
       <p class="products-full__price">
         <del class="products-full__price--normal">{{ product.price }}$</del>
-        <b class="products-full__price--sale">{{ getSalePrice(product.price, 25) }}$</b>
+        <b class="products-full__price--sale">{{ getSalePrice(product.price) }}$</b>
       </p>
-      <button class="products-full__add" type="button">Добавить в корзину</button>
+
+      <button @click="addToCart(product)" v-if="!isCart" class="products-full__add" type="button">Добавить в корзину</button>
+      <div v-else class="products-full__counter">
+        <button @click="removeFromCart(product.id)" class="products-full__counter-remove">-</button>
+        <p class="products-full__counter-value">{{ product.qty.inCart }}</p>
+        <button @click="addToCartById(product.id)" class="products-full__counter-add">+</button>
+      </div>
     </div>
   </section>
 </template>

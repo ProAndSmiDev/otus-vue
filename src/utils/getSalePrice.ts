@@ -1,5 +1,10 @@
-export default (price: number | string, sale: number): string => {
-    const productPrice = typeof price === 'number' ? price : Number(price);
+import {useCartStore} from "@store/cart";
 
-    return Number(productPrice * Number(1 - sale / 100)).toFixed(2);
+export default (price: number | string): number => {
+    const {discountPercentage} = useCartStore()
+
+    const productPrice = typeof price === 'number' ? price : parseFloat(price)
+    const salePrice = productPrice - (productPrice * discountPercentage / 100)
+
+    return parseFloat(salePrice.toFixed(2));
 }

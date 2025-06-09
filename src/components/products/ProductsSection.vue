@@ -1,34 +1,39 @@
 <script setup lang="ts">
-import ProductsItem from "./ProductsItem.vue";
-import {ref, computed} from "vue";
-import {Field, Form} from "vee-validate";
-import {IProductsItem} from "../../types/Products";
+import ProductsItem from "./ProductsItem.vue"
+import {ref, computed, onMounted} from "vue"
+import {Field, Form} from "vee-validate"
+import {useProductsStore} from "@store/products"
+import SvgSearch from "@assets/svg/SvgSearch.vue";
 
-const props = defineProps<{
-  products: IProductsItem[]
-  isLoading: boolean
-}>()
+const searchInput = ref<string>('')
+const searchQuery = ref<string>('')
+const store = useProductsStore()
+const products = computed(() => [...store.products])
 
-const searchInput = ref<string>('');
-const searchQuery = ref<string>('');
+onMounted(async () => {
+  await store.fetchProducts()
+})
 
 const filteredProducts = computed(() => {
-  const query = searchQuery.value.trim().toLowerCase();
+  const query = searchQuery.value.trim().toLowerCase()
 
-  if (!query) return props.products;
+  if (!query) {
+    return products.value
+  }
 
-  const numberQuery = parseFloat(query);
+  return products.value.filter((product: any) => {
+    if (!product) return false
 
-  return props.products.filter((product: IProductsItem) => {
-    const nameMatch = product.title.toLowerCase().includes(query);
-    const priceMatch = !isNaN(numberQuery) && product.price === numberQuery;
+    const nameMatch = product.title.toLowerCase().includes(query)
+    const priceMatch =
+        !isNaN(parseFloat(query)) && product.price === parseFloat(query)
 
-    return nameMatch || priceMatch;
+    return nameMatch || priceMatch
   })
 })
 
 function handleSearch() {
-  searchQuery.value = searchInput.value;
+  searchQuery.value = searchInput.value
 }
 </script>
 
@@ -38,25 +43,23 @@ function handleSearch() {
       Список продуктов
     </h2>
 
-    <span v-if="isLoading" class="products-section__loader">
+    <Form class="products-section__search" @submit="handleSearch">
+      <Field name="userSearch" class="products-section__search-field" placeholder="Введите название или цену" v-model="searchInput" />
+
+      <button class="products-section__search-submit" type="submit">
+        <SvgSearch />
+      </button>
+    </Form>
+
+    <span v-if="store.isLoading" class="products-section__loader">
       Загрузка, подождите...
     </span>
 
-    <template v-else>
-      <Form class="products-section__search" @submit="handleSearch">
-        <Field name="userSearch" class="products-section__search-field" placeholder="Введите название или цену" v-model="searchInput" />
-
-        <button class="products-section__search-submit" type="submit">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" fill="currentColor"/></svg>
-        </button>
-      </Form>
-
-      <ul class="products-section__list">
-        <li v-for="product in filteredProducts" :key="product.id" class="products-section__item">
-          <ProductsItem :product="product" class="products-section__product" />
-        </li>
-      </ul>
-    </template>
+    <ul v-else class="products-section__list">
+      <li v-for="product in filteredProducts" :key="product.id" class="products-section__item">
+        <ProductsItem :product class="products-section__product" />
+      </li>
+    </ul>
   </section>
 </template>
 

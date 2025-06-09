@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import {ref} from 'vue';
-import ModalOrder from "../modal/ModalOrder.vue";
-import {IProductsItem} from "../../types/Products";
+import ModalOrder from "@components/modal/ModalOrder.vue";
+import {IProducts} from "@types/Products";
 import {RouterLink} from "vue-router";
-import getSalePrice from "../../utils/getSalePrice";
+import getSalePrice from "@utils/getSalePrice";
 
 interface Props {
-  product: IProductsItem
+  product: IProducts
 }
 
 defineProps<Props>()
@@ -24,23 +24,23 @@ function openSendFormModal(e: Event) {
     <RouterLink :to="`/products/${product.id}`" class="products-item__link">
       <article class="products-item__wrapper">
         <header class="products-item__header">
-          <img :src="product?.image" alt="Фото продукта" class="products-item__photo">
+          <img :src="product.image" alt="Фото продукта" class="products-item__photo">
         </header>
 
         <main class="products-item__content">
           <h3 class="products-item__title">
-            {{ product?.title }}
+            {{ product.title }}
           </h3>
 
           <p class="products-item__description">
-            {{ product?.description }}
+            {{ product.description }}
           </p>
         </main>
 
         <footer class="products-item__footer">
           <p class="products-item__price">
             <del class="products-item__price--normal">{{ product.price }}$</del>
-            <b class="products-item__price--sale">{{ getSalePrice(product.price, 25) }}$</b>
+            <b class="products-item__price--sale">{{ getSalePrice(product.price) }}$</b>
           </p>
           <button
               @click="openSendFormModal"
@@ -54,7 +54,7 @@ function openSendFormModal(e: Event) {
 
     <ModalOrder
         v-if="isSendFormModalOpen"
-        :product
+        :products="[product]"
         @close-modal="() => isSendFormModalOpen = false"
     />
   </div>
