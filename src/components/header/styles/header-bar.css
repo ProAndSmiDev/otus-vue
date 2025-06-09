@@ -1,0 +1,70 @@
+.header-bar {
+    display: flex;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: rgb(100,50,25);
+}
+
+.header-bar .header-bar__link {
+    color: rgb(255,255,255);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 24px;
+    line-height: 29px;
+    transition: color 0.3s ease-in-out;
+}
+
+.header-bar .header-bar__link:hover,
+.header-bar .header-bar__link--active {
+    color: rgb(185, 120, 93);
+}
+
+.header-bar .header-bar__menu {
+    margin-left: auto;
+}
+
+.header-bar .header-bar__actions {
+    margin-left: auto;
+    display: flex;
+    column-gap: 20px;
+}
+
+.header-bar .header-bar__login,
+.header-bar .header-bar__logout,
+.header-bar .header-bar__cart {
+    color: rgb(255,255,255);
+    transition: color 0.3s ease-in-out;
+}
+
+.header-bar .header-bar__login:hover,
+.header-bar .header-bar__logout:hover,
+.header-bar .header-bar__cart:hover,
+.header-bar .header-bar__cart--active {
+    color: rgb(185, 120, 93);
+}
+
+.header-bar .header-bar__login,
+.header-bar .header-bar__logout {
+    width: 36px;
+    height: 36px;
+}
+
+.header-bar .header-bar__cart {
+    position: relative;
+    width: 36px;
+}
+
+.header-bar .header-bar__cart-counter {
+    position: absolute;
+    top: 0;
+    right: -10px;
+    background-color: rgb(255, 0, 0);
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+}

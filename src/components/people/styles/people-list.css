@@ -52,6 +52,7 @@
 
 .people-list .people-list__info {
     list-style: none;
+    flex-direction: column;
     padding-top: 8px;
     color: rgb(100,50,25);
 }

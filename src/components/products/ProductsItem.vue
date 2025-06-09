@@ -1,40 +1,63 @@
 <script setup lang="ts">
-import {computed} from 'vue';
+import {ref} from 'vue';
+import ModalOrder from "@components/modal/ModalOrder.vue";
+import {IProducts} from "@types/Products";
+import {RouterLink} from "vue-router";
+import getSalePrice from "@utils/getSalePrice";
 
 interface Props {
-  product: IProductsItem
+  product: IProducts
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
-const normalPrice = computed(() => Number(props.product.price).toFixed(2))
-const salePrice = computed(() =>(Number(props.product.price) * 0.85).toFixed(2))
+const isSendFormModalOpen = ref<boolean>(false)
+
+function openSendFormModal(e: Event) {
+  e.preventDefault()
+  isSendFormModalOpen.value = true
+}
 </script>
 
 <template>
-  <article class="products-item">
-    <header class="products-item__header">
-      <img :src="product.image" alt="Фото продукта" class="products-item__photo">
-    </header>
+  <div class="products-item">
+    <RouterLink :to="`/products/${product.id}`" class="products-item__link">
+      <article class="products-item__wrapper">
+        <header class="products-item__header">
+          <img :src="product.image" alt="Фото продукта" class="products-item__photo">
+        </header>
 
-    <main class="products-item__content">
-      <h3 class="products-item__title">
-        {{ product.title }}
-      </h3>
+        <main class="products-item__content">
+          <h3 class="products-item__title">
+            {{ product.title }}
+          </h3>
 
-      <p class="products-item__description">
-        {{ product.description }}
-      </p>
-    </main>
+          <p class="products-item__description">
+            {{ product.description }}
+          </p>
+        </main>
 
-    <footer class="products-item__footer">
-      <p class="products-item__price">
-        <span class="products-item__price--sale">{{ salePrice }}$</span>
-        <del class="products-item__price--normal">{{ normalPrice }}$</del>
-      </p>
-      <button class="products-item__cart">Добавить</button>
-    </footer>
-  </article>
+        <footer class="products-item__footer">
+          <p class="products-item__price">
+            <del class="products-item__price--normal">{{ product.price }}$</del>
+            <b class="products-item__price--sale">{{ getSalePrice(product.price) }}$</b>
+          </p>
+          <button
+              @click="openSendFormModal"
+              class="products-item__order"
+          >
+            Оформить заказ
+          </button>
+        </footer>
+      </article>
+    </RouterLink>
+
+    <ModalOrder
+        v-if="isSendFormModalOpen"
+        :products="[product]"
+        @close-modal="() => isSendFormModalOpen = false"
+    />
+  </div>
 </template>
 
 <style scoped src="./styles/products-item.css"></style>
