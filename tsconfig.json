@@ -3,14 +3,23 @@
         "baseUrl": ".",
         "paths": {
             "@/*": ["src/*"],
+            "@type/*": ["src/types/*"],
             "@pages/*": ["src/pages/*"],
-            "@types/*": ["src/types/*"],
             "@store/*": ["src/store/*"],
             "@utils/*": ["src/utils/*"],
             "@routes/*": ["src/routes/*"],
             "@assets/*": ["src/assets/*"],
             "@components/*": ["src/components/*"],
             "@composables/*": ["src/composables/*"]
-        }
-    }
+        },
+        "jsx": "preserve",
+        "module": "ESNext",
+        "target": "ESNext",
+        "moduleResolution": "Node",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true
+    },
+    "include": ["src"],
+    "exclude": ["node_modules"]
 }

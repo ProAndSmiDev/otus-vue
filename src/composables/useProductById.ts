@@ -1,6 +1,6 @@
 import {useProductsStore} from "@store/products";
 import {computed, ComputedRef} from "vue";
-import {IProducts} from "@types/Products";
+import {IProducts} from "@type/Products";
 
 export function useProductById(productId: number) {
     const { products, isLoading } = useProductsStore();
@@ -8,7 +8,7 @@ export function useProductById(productId: number) {
     const product: ComputedRef<IProducts | undefined> = computed(() => {
         if (!products) return undefined
 
-        return products.find(p => p.id === productId)
+        return products.find((p: any) => p.id === productId)
     })
 
     return {

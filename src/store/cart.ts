@@ -1,6 +1,6 @@
 import {defineStore} from "pinia"
 import {computed, ref} from "vue"
-import {IProducts} from "@types/Products"
+import {IProducts} from "@type/Products"
 import getSalePrice from "@utils/getSalePrice"
 
 export const useCartStore = defineStore("cart", () => {
@@ -73,17 +73,19 @@ export const useCartStore = defineStore("cart", () => {
     const removeFromCart = (productId: number) => {
         const productInCart = cartProducts.value.find((product) => product.id === productId)
 
-        if (productInCart.qty.inCart > 1) {
-            productInCart.qty.inCart--
-            syncProductQty(productId, productInCart.qty.inCart)
-        } else {
-            const index = cartProducts.value.findIndex((product) => product.id === productId)
+        if (productInCart) {
+            if (productInCart.qty.inCart > 1) {
+                productInCart.qty.inCart--
+                syncProductQty(productId, productInCart.qty.inCart)
+            } else {
+                const index = cartProducts.value.findIndex((product) => product.id === productId)
 
-            if (index !== -1) {
-                cartProducts.value.splice(index, 1)
+                if (index !== -1) {
+                    cartProducts.value.splice(index, 1)
+                }
+
+                syncProductQty(productId, 0)
             }
-
-            syncProductQty(productId, 0)
         }
 
         saveCartToLocalStorage()
