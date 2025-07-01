@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {IProducts} from "@types/Products"
+import {IProducts} from "@type/Products"
 import getSalePrice from "@utils/getSalePrice"
 import { useCartStore } from "@store/cart"
 

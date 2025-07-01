@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import {IPeople} from "@types/People"
+import {IPeople} from "@type/People"
 
 interface Props {
   people: IPeople[]
