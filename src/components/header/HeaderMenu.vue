@@ -14,6 +14,12 @@ const menu = [
     url: '/products',
     title: 'Перейти в каталог продуктов',
   },
+  {
+    id: 3,
+    name: 'Города',
+    url: '/countries',
+    title: 'Перейти на список городов',
+  },
 ];
 </script>
 
