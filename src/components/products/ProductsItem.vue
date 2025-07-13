@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {ref} from 'vue';
 import ModalOrder from "@components/modal/ModalOrder.vue";
-import {IProducts} from "@types/Products";
+import {IProducts} from "@type/Products";
 import {RouterLink} from "vue-router";
 import getSalePrice from "@utils/getSalePrice";
 

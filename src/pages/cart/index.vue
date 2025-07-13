@@ -2,7 +2,7 @@
 import ProductsFull from "@components/products/ProductsFull.vue"
 import {ref, computed} from "vue"
 import ModalOrder from "@components/modal/ModalOrder.vue"
-import {IProducts} from "@types/Products"
+import {IProducts} from "@type/Products"
 import {useCartStore} from "@store/cart"
 
 const isSendFormModalOpen = ref<boolean>(false);

@@ -2,7 +2,7 @@
 import {onMounted, ref} from "vue"
 import {Field, Form, useResetForm} from "vee-validate"
 import {useProductsStore} from "@store/products"
-import {IProducts} from "@types/Products"
+import {IProducts} from "@type/Products"
 import ModalProductAdd from "@components/modal/ModalProductAdd.vue"
 import {useRouter} from "vue-router"
 

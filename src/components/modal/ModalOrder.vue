@@ -3,7 +3,7 @@ import {ref} from 'vue'
 import {Field, Form, ErrorMessage, defineRule, useForm} from "vee-validate"
 import {useValidation} from "@composables/useValidation"
 import axios from "axios"
-import {IProducts} from "@types/Products"
+import {IProducts} from "@type/Products"
 import UiModal from "@components/ui/modal/UiModal.vue"
 import {useRouter} from "vue-router"
 import {useCartStore} from "@store/cart";
