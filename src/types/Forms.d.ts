@@ -3,7 +3,7 @@ interface Forms {
     name: string
     type: string
     label: string
-    rules: string
+    rules?: string
     value?: boolean
     placeholder?: string;
 }
