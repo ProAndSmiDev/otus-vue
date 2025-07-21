@@ -1,10 +1,10 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
 import axios from "axios"
-import { IProducts } from "@type/Products"
+import { Products } from "@type/Products"
 
 export const useProductsStore = defineStore("products", () => {
-    const products = ref<IProducts[]>([])
+    const products = ref<Products[]>([])
     const isLoading = ref<boolean>(true)
 
     const fetchProducts = async () => {
@@ -29,7 +29,7 @@ export const useProductsStore = defineStore("products", () => {
         }
     }
 
-    const addProduct = (newProduct: IProducts) => {
+    const addProduct = (newProduct: Products) => {
         products.value.push(newProduct)
         const localProducts = JSON.parse(localStorage.getItem("localProducts") || "[]")
         localProducts.push(newProduct)
