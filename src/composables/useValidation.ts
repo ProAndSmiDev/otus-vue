@@ -11,7 +11,7 @@ export function useValidation() {
     }
     const validateName = (value: string): boolean | string => value ? true : 'Введите свое имя!'
 
-    const validateEmail = (value: string) => {
+    const validateEmail = (value: string): boolean | string => {
         if (!value) return 'Поле "*E-mail" обязательно'
         const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
         return regex.test(value) ? true : 'Введено некорректное значение поля "Email"'

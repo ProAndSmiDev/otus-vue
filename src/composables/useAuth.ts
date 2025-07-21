@@ -1,11 +1,11 @@
-import { ref, computed } from 'vue'
+import { ref, Ref } from 'vue'
 import {useRouter} from "vue-router"
 
 export function useAuth() {
-    const isAuth = ref(localStorage.getItem('isAuth') === 'true')
+    const isAuth: Ref<boolean> = ref(localStorage.getItem('isAuth') === 'true')
     const router = useRouter()
 
-    const login = (username: string, password: string) => {
+    const login = (username: string, password: string): boolean => {
         if (username === 'admin' && password === '1q2w3e4R') {
             localStorage.setItem('isAuth', 'true')
             isAuth.value = true
@@ -14,7 +14,7 @@ export function useAuth() {
         return false;
     };
 
-    const logout = () => {
+    const logout = (): void => {
         localStorage.removeItem('isAuth')
         isAuth.value = false
         router.go(0)
