@@ -14,11 +14,11 @@ export function useAuth() {
         return false;
     };
 
-    const logout = computed(() => {
+    const logout = () => {
         localStorage.removeItem('isAuth')
         isAuth.value = false
-        router.go('/')
-    });
+        router.go(0)
+    };
 
     return {
         isAuth,

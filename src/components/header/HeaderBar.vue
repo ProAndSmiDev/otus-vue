@@ -6,7 +6,7 @@ import {computed, ref} from "vue"
 import ModalLogin from "@components/modal/ModalLogin.vue"
 import {useAuth} from "@composables/useAuth"
 import SvgLogin from "@assets/svg/SvgLogin.vue"
-import SvgLogout from "@assets/svg/SvgLogin.vue"
+import SvgLogout from "@assets/svg/SvgLogout.vue"
 import SvgCart from "@assets/svg/SvgCart.vue"
 
 const {getCounterByCartItems} = useCartStore()

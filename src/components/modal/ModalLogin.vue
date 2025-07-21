@@ -53,6 +53,7 @@ const handleSubmit = (values: any) => {
   if (!isAuth.value) {
     login(userLogin, userPassword)
     resetForm()
+    setTimeout(() => router.go(0), 1500)
     notice.value = 'Вы успешно вошли в систему! ^_^'
   } else {
     console.warn('Вы уже авторизованы!')
