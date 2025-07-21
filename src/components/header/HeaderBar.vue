@@ -11,7 +11,7 @@ import SvgCart from "@assets/svg/SvgCart.vue"
 
 const {getCounterByCartItems} = useCartStore()
 const {isAuth, logout} = useAuth()
-const cartCounter = computed(() => {
+const cartCounter = computed<number>(() => {
   return getCounterByCartItems()
 })
 const isOpened = ref<boolean>(false)

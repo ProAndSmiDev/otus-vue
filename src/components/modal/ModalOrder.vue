@@ -24,7 +24,7 @@ const isSentForm = ref(false)
 const {resetForm} = useForm()
 const {clearCart} = useCartStore()
 
-const formFields = [
+const formFields: Forms[] = [
   {
     id: 1,
     label: 'Ваше имя:',
@@ -71,15 +71,15 @@ const modalTitle = ref<string>(isSentForm.value ? 'Вы успешно офор�
 
 async function sendForm(values: FormOrderValues | any) {
   try {
-    const data = ref<Object>([])
+    const data = ref<FormOrderValues[]>([])
 
     props.products.forEach((item) => {
       data.value.push({
-        name: values.userName,
-        email: values.userEmail,
-        phone: values.userPhone,
-        address: values.userAddress,
-        agreement: values.userAgreement,
+        userName: values.userName,
+        userEmail: values.userEmail,
+        userPhone: values.userPhone,
+        userAddress: values.userAddress,
+        userAgreement: values.userAgreement,
         productName: item.title,
         productPrice: item.price,
         qty: item.qty.inCart || 1,
