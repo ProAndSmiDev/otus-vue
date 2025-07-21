@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {IProducts} from "@type/Products"
+import {Products} from "@type/Products"
 import getSalePrice from "@utils/getSalePrice"
 import { useCartStore } from "@store/cart"
 
 defineProps<{
-  product: IProducts
+  product: Products
   isCart?: boolean
 }>()
 

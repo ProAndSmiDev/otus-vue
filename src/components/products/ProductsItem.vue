@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import {ref} from 'vue';
 import ModalOrder from "@components/modal/ModalOrder.vue";
-import {IProducts} from "@type/Products";
+import {Products} from "@type/Products";
 import {RouterLink} from "vue-router";
 import getSalePrice from "@utils/getSalePrice";
 
 interface Props {
-  product: IProducts
+  product: Products
 }
 
 defineProps<Props>()
