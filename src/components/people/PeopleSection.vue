@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import PeopleList from "@components/people/PeopleList.vue"
 import { ref } from "vue"
 import {Status} from "@type/enums/Status"
 import {Gender} from "@type/enums/Gender"
-import {IPeople} from "@type/People"
+import {People} from "@type/People";
 
-const people: IPeople[] = [
+const people: People[] = [
   {
     id: 1,
     name: 'Alice',

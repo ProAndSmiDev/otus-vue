@@ -2,16 +2,15 @@
 import ProductsFull from "@components/products/ProductsFull.vue"
 import {ref, computed} from "vue"
 import ModalOrder from "@components/modal/ModalOrder.vue"
-import {IProducts} from "@type/Products"
+import {Products} from "@type/Products"
 import {useCartStore} from "@store/cart"
 
 const isSendFormModalOpen = ref<boolean>(false);
 
 const {cartProducts, clearCart, getCounterByCartItems, getTotalPriceByCartItems} = useCartStore()
 const counterProducts = computed<number>(() => getCounterByCartItems())
-const products = ref<IProducts[]>(cartProducts)
-const {totalPrice} = getTotalPriceByCartItems
-const {saleTotalPrice} = getTotalPriceByCartItems
+const products = ref<Products[]>(cartProducts)
+const {totalPrice, saleTotalPrice} = getTotalPriceByCartItems
 </script>
 
 <template>

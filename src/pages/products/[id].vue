@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import {useRoute} from "vue-router"
+import { computed} from "vue";
+import {RouteLocationNormalizedLoaded, useRoute} from "vue-router"
 import ProductsFull from "@components/products/ProductsFull.vue"
 import {useProductById} from "@composables/useProductById"
 
-const route = useRoute()
+const route = useRoute() as RouteLocationNormalizedLoaded
 const {product} = useProductById(Number(route.params.productId))
 </script>
 

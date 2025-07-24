@@ -3,9 +3,14 @@ interface Props {
   title: string
   narrow?: boolean
 }
+
+interface Emits {
+  (e: 'close-modal'): void
+}
+
 defineProps<Props>()
 
-const emits = defineEmits(['close-modal'])
+const emits = defineEmits<Emits>()
 
 function closeModal(e: Event) {
   e.preventDefault()

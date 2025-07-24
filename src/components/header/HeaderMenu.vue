@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
 
-const menu = [
+const menu: Menu[] = [
   {
     id: 1,
     name: 'Главная',

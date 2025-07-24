@@ -6,16 +6,23 @@ import UiModal from "@components/ui/modal/UiModal.vue";
 import {useAuth} from "@composables/useAuth";
 import {useRouter} from "vue-router";
 
-const props = defineProps<{
-  isOpened: boolean
-}>()
+interface Props {
+  isOpened: boolean;
+}
+
+interface Emits {
+  (e: 'close-modal'): void;
+}
+
+defineProps<Props>()
+
 const rules = useValidation()
 
 Object.entries(rules).forEach(([name, validator]) => {
   defineRule(name, validator)
 })
 
-const formFields = [
+const formFields: Forms[] = [
   {
     id: 1,
     label: 'Логин:',
@@ -38,8 +45,8 @@ const modalTitle = ref<string>('Вход в систему')
 const router = useRouter()
 const {login, isAuth} = useAuth()
 const resetForm = useResetForm()
-const emit = defineEmits(['close-modal'])
-const isContentVisible = ref(false)
+const emit = defineEmits<Emits>()
+const isContentVisible = ref<boolean>(false)
 const notice = ref<string>('')
 
 const handleCloseModal = () => {
@@ -47,12 +54,13 @@ const handleCloseModal = () => {
   emit('close-modal')
 }
 
-const handleSubmit = (values: any) => {
+const handleSubmit = (values: Record<string, any>) => {
   const { userLogin, userPassword } = values
 
   if (!isAuth.value) {
     login(userLogin, userPassword)
     resetForm()
+    setTimeout(() => router.go(0), 1500)
     notice.value = 'Вы успешно вошли в систему! ^_^'
   } else {
     console.warn('Вы уже авторизованы!')

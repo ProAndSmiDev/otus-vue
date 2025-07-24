@@ -1,10 +1,10 @@
 import {defineStore} from "pinia"
 import {computed, ref} from "vue"
-import {IProducts} from "@type/Products"
+import {Products} from "@type/Products"
 import getSalePrice from "@utils/getSalePrice"
 
 export const useCartStore = defineStore("cart", () => {
-    const cartProducts = ref<IProducts[]>([])
+    const cartProducts = ref<Products[]>([])
     const discountPercentage = ref<number>(25)
 
     const saveCartToLocalStorage = () => {
@@ -27,7 +27,7 @@ export const useCartStore = defineStore("cart", () => {
         }
     }
 
-    const addToCart = (product: IProducts) => {
+    const addToCart = (product: Products) => {
         const existingProduct = cartProducts.value.find(item => item.id === product.id)
 
         if (existingProduct) {

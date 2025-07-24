@@ -2,7 +2,7 @@
 import {onMounted, ref} from "vue"
 import {Field, Form, useResetForm} from "vee-validate"
 import {useProductsStore} from "@store/products"
-import {IProducts} from "@type/Products"
+import {Products} from "@type/Products"
 import ModalProductAdd from "@components/modal/ModalProductAdd.vue"
 import {useRouter} from "vue-router"
 
@@ -10,7 +10,7 @@ const store = useProductsStore()
 const resetForm = useResetForm()
 const isProductAdded = ref<boolean>(false)
 const router = useRouter()
-const formFields = [
+const formFields: Forms[] = [
   {
     id: 1,
     label: 'Название продукта:',
@@ -47,10 +47,10 @@ const formFields = [
   }
 ]
 
-function addProductWithData(values: Record<string, any>) {
+function addProductWithData(values: Record<string, any>): void {
   const lastProductId = store.products.length > 0 ? store.products[store.products.length - 1].id : 0
 
-  const formData: IProducts = {
+  const formData: Products = {
     id: lastProductId + 1,
     title: values.productName,
     price: parseFloat(values.productPrice),
@@ -71,7 +71,7 @@ function addProductWithData(values: Record<string, any>) {
   isProductAdded.value = true
 }
 
-function handleCloseModal() {
+function handleCloseModal(): void {
   router.go(0)
   isProductAdded.value = false
 }
