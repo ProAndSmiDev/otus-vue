@@ -11,7 +11,11 @@
     "test:cypress": "cypress open"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.8",
+    "@vue/apollo-composable": "^4.2.2",
     "axios": "^1.9.0",
+    "graphql": "^16.11.0",
+    "graphql-tag": "^2.12.6",
     "pinia": "^3.0.2",
     "vee-validate": "^4.15.0",
     "vue": "^3.5.13",
@@ -24,5 +28,5 @@
     "vite": "^6.3.5",
     "vitest": "^3.2.4"
   },
-  "packageManager": "pnpm@10.12.4+sha512.5ea8b0deed94ed68691c9bad4c955492705c5eeb8a87ef86bc62c74a26b037b08ff9570f108b2e4dbd1dd1a9186fea925e527f141c648e85af45631074680184"
+  "packageManager": "pnpm@10.13.1"
 }

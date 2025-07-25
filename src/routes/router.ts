@@ -27,6 +27,10 @@ const router = [
         component: () => import('@pages/cart/success.vue'),
     },
     {
+        path: '/countries',
+        component: () => import('@pages/countries.vue'),
+    },
+    {
         path: '/admin/products/add',
         component: () => import('@pages/admin/products/add.vue'),
         meta: {
